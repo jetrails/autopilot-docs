@@ -7,8 +7,7 @@ breadcrumb:
   home: ":icon-home:"         # or, use an icon
   separator: "|"              # Custom item separator
 branding:
-  title: AutoPilot
-  label: v5
+  title: AutoPilot Docs
 footer:
   copyright: "&copy; Copyright {{ year }}. All rights reserved."
 edit:
@@ -17,4 +16,4 @@ edit:
   branch: "master"
   label: "Edit this page"
 editor:
-  enabled: false
+  enabled: true

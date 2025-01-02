@@ -20,7 +20,7 @@ If provisioning fails, open a support ticket for assistance.
 After provisioning, visit the Security tab to whitelist your IPv4 address and SSH key.
 Find your public IP at [ip.jetrails.com](https://ip.jetrails.com).
 
-[!button target="blank" icon="link-external" iconAlign="right" text="Find Your Public IP" href="https://ip.jetrails.com"]
+[!ref target="blank" text="My IP Address"](https://ip.jetrails.com)
 
 Your shell access command is available on the Overview tab.
 
