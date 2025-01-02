@@ -1,11 +1,6 @@
 input: .
 output: .retype
-poweredByRetype: false
-breadcrumb:
-  enabled: true               # Enabled by default on Pro projects
-  home: Home                  # Custom label for the first item
-  home: ":icon-home:"         # or, use an icon
-  separator: "|"              # Custom item separator
+url: docs.jetrails.com
 branding:
   title: AutoPilot Docs
 footer:
