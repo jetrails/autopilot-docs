@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://docs.jetrails.com/sitemap.xml.gz
+Sitemap: https://docs.autopilot.jetrails.com/sitemap.xml.gz
