@@ -1,5 +1,5 @@
 ---
-title: Getting Started
+title: Welcome
 ---
 
-Hello World
+Hello World!
