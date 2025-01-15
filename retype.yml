@@ -3,6 +3,14 @@ output: .retype
 url: docs.autopilot.jetrails.com
 branding:
   title: AutoPilot Docs
+  logo: assets/images/logo.svg
+  colors:
+    label:
+      text: "#282F38"
+      background: "#89BA40"
+links:
+  - text: AutoPilot Portal
+    link: https://autopilot.jetrails.com
 footer:
   copyright: "&copy; Copyright {{ year }}. All rights reserved."
 edit:
