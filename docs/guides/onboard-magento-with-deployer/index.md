@@ -125,6 +125,6 @@ sudo chmod -R u=rwX,g=u,o=rX /var/www/example.com
 To grant the `www-data` user the necessary write permissions, use these commands:
 
 ```shell
-sudo setfacl -L -R -m u:"www-data":rwX /var/www/example.com/live/{var,pub/static,pub/media,generated,var/page_cache}
-sudo setfacl -dL -R -m u:"www-data":rwX /var/www/example.com/live/{var,pub/static,pub/media,generated,var/page_cache}
+sudo setfacl -L -R -m u:"www-data":rwX -m u:"jrc-3p7i-376i":rwX /var/www/example.com/live/{var,pub/static,pub/media,generated,var/page_cache}
+sudo setfacl -dL -R -m u:"www-data":rwX -m u:"jrc-3p7i-376i":rwX /var/www/example.com/live/{var,pub/static,pub/media,generated,var/page_cache}
 ```
