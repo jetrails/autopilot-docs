@@ -1,11 +1,11 @@
 ---
-title: Add Custom Boot Hook to /opt/jrc/hooks/boot.d
+title: Add Custom Boot Hook to /mnt/jrc-comms/hooks/boot.d
 ---
 
-This guide explains how to add a custom boot hook to `/opt/jrc/hooks/boot.d/` in applications that execute scripts in numerical order. Follow these steps to ensure proper execution order and functionality.
+This guide explains how to add a custom boot hook to `/mnt/jrc-comms/hooks/boot.d/` in applications that execute scripts in numerical order. Follow these steps to ensure proper execution order and functionality.
 
 !!! Assumption:
-We assume you have root access to modify files in `/opt/jrc/hooks/boot.d/`.
+We assume you have root access to modify files in `/mnt/jrc-comms/hooks/boot.d/`.
 !!!
 
 ## Create Custom Boot Hook
@@ -15,14 +15,13 @@ Create a new shell script with a filename starting with `99-` (to ensure it runs
 
 ```bash
 #!/bin/bash
-/opt/jrc/hooks/boot.d/99-custom-task
+/mnt/jrc-comms/hooks/boot.d/99-custom-task
 
 echo "Running custom boot task..."
 ```
 
 ### 2. Set Permissions and Ownership  
 Make the script executable and ensure it’s owned by `root`:  
-
 
 ### 3. Verify Execution Order  
 The application runs scripts in ascending order based on their numeric prefixes. For example:  
@@ -43,7 +42,7 @@ To log system time at the end of the boot process:
 
 ```bash
 #!/bin/bash
-/opt/jrc/hooks/boot.d/99-custom-task
+/mnt/jrc-comms/hooks/boot.d/99-custom-task
 
 LOGFILE="/var/log/custom-boot.log"
 echo "Boot completed at: $(date)" >> $LOGFILE
@@ -55,7 +54,7 @@ echo "Boot completed at: $(date)" >> $LOGFILE
 1. **Test your script manually** before relying on the boot process: 
 
 ```bash
-sudo /opt/jrc/hooks/boot.d/99-custom-task
+sudo /mnt/jrc-comms/hooks/boot.d/99-custom-task
 ```
 
 2. **Check logs** for errors (e.g., `/var/log/syslog` or `journalctl`)  
@@ -63,7 +62,7 @@ sudo /opt/jrc/hooks/boot.d/99-custom-task
 3. **Validate script syntax** using:  
 
 ```bash
-bash -n /opt/jrc/hooks/boot.d/99-custom-task
+bash -n /mnt/jrc-comms/hooks/boot.d/99-custom-task
 ```
 
 By following this structure, you can extend the boot process with custom logic while maintaining predictable execution order.
@@ -78,13 +77,13 @@ The following is an example of how you would implement a boot hook script to cre
 
 ## Boot Hook Script Implementation
 
-### 1. Create /opt/jrc/hooks/boot.d/99-links Script
+### 1. Create /mnt/jrc-comms/hooks/boot.d/99-links Script
 
 Creates bind mounts after filesystems are available
 
 ```bash
 #!/bin/bash
-/opt/jrc/hooks/boot.d/99-links
+/mnt/jrc-comms/hooks/boot.d/99-links
 
 echo "Creating bind mounts..."
 mount --bind /var/www/domain.com/shared/var/salesexport /home/user/salesexport
@@ -94,15 +93,15 @@ mount --bind /var/www/domain.com/shared/media/importexport /home/user/importexpo
 ### 2. Set Permissions
 
 ```bash
-sudo chmod +x /opt/jrc/hooks/boot.d/99-links
-sudo chown root:root /opt/jrc/hooks/boot.d/99-links
+sudo chmod +x /mnt/jrc-comms/hooks/boot.d/99-links
+sudo chown root:root /mnt/jrc-comms/hooks/boot.d/99-links
 ```
 
 ## Verification
 1. **Validate script syntax**:
 
 ```bash
-bash -n /opt/jrc/hooks/boot.d/99-custom-task
+bash -n /mnt/jrc-comms/hooks/boot.d/99-custom-task
 ```
 
 2. **Check active mounts**:
