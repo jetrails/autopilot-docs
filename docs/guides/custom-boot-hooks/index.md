@@ -29,7 +29,7 @@ sudo chmod +x /mnt/jrc-comms/hooks/boot.d/99-custom-task
 ```
 
 ### 3. Verify Execution Order  
-The application runs scripts in ascending order based on their numeric prefixes. Scripts added to `/mnt/jrc-comms/hooks/boot.d` will be injected into script located in `/opt/jrc/hooks/boot.d` based on script prefix For example:  
+The application runs scripts in ascending order based on their numeric prefixes. Scripts added to `/mnt/jrc-comms/hooks/boot.d` will be injected into `/opt/jrc/hooks/boot.d` based on script prefix automatically. For example:  
 
 - `05-mount-recovery-mount` runs first (found in `/opt/jrc/hooks/boot.d`)
 - `10-cluster-clean` runs next (found in `/opt/jrc/hooks/boot.d`)
