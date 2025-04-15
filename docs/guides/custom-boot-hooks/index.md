@@ -23,17 +23,23 @@ echo "Running custom boot task..."
 ### 2. Set Permissions and Ownership  
 Make the script executable and ensure it’s owned by `root`:  
 
-### 3. Verify Execution Order  
-The application runs scripts in ascending order based on their numeric prefixes. For example:  
+```bash
+sudo chown root:root /mnt/jrc-comms/hooks/boot.d/99-custom-task
+sudo chmod +x /mnt/jrc-comms/hooks/boot.d/99-custom-task
+```
 
-- `05-mount-recovery-mount` runs first  
-- `10-cluster-clean` runs next  
-- `99-custom-task` runs last  
+### 3. Verify Execution Order  
+The application runs scripts in ascending order based on their numeric prefixes. Scripts added to `/mnt/jrc-comms/hooks/boot.d` will be injected into script located in `/opt/jrc/hooks/boot.d` based on script prefix For example:  
+
+- `05-mount-recovery-mount` runs first (found in `/opt/jrc/hooks/boot.d`)
+- `10-cluster-clean` runs next (found in `/opt/jrc/hooks/boot.d`)
+- `99-custom-task` runs last (added to `/mnt/jrc-comms/hooks/boot.d`)
 
 **Key rules:**  
 - Prefixes determine execution order (e.g., `00-` to `99-`)  
 - Use two-digit numbering for clarity (e.g., `05-`, `10-`, `99-`)  
 - Scripts with the same prefix may execute in lexicographical order, but avoid ambiguity by using unique prefixes  
+- Scripts added to `/mnt/jrc-comms/hooks/boot.d` will persist AMI upgrades, stack clones, etc.
 
 ---
 
