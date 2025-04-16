@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.7.0.798055394076">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.7.0.798129053168">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.7.0">
@@ -30,12 +30,12 @@
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
-    <link href="../../resources/css/retype.css?v=3.7.0.798055394076" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.7.0.798129053168" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.7.0.798055394076" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.7.0.798129053168" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.7.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.7.0.798055394076" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.7.0.798055394076" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.7.0.798129053168" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.7.0.798129053168" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -199,10 +199,10 @@
     </h2>
 </doc-anchor-target>
 <doc-anchor-target id="1-create-your-script">
-    <h3>
+    <h5>
         <doc-anchor-trigger class="header-anchor-trigger" to="#1-create-your-script">#</doc-anchor-trigger>
         <span>1. Create Your Script</span>
-    </h3>
+    </h5>
 </doc-anchor-target>
 <p>Create a new shell script with a filename starting with <code v-pre>99-</code> (to ensure it runs last). For example:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
@@ -212,10 +212,10 @@
 echo &quot;Running custom boot task...&quot;</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="2-set-permissions-and-ownership">
-    <h3>
+    <h5>
         <doc-anchor-trigger class="header-anchor-trigger" to="#2-set-permissions-and-ownership">#</doc-anchor-trigger>
         <span>2. Set Permissions and Ownership</span>
-    </h3>
+    </h5>
 </doc-anchor-target>
 <p>Make the script executable and ensure it’s owned by <code v-pre>root</code>:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
@@ -223,10 +223,10 @@ echo &quot;Running custom boot task...&quot;</code></pre>
 sudo chmod +x /mnt/jrc-comms/hooks/boot.d/99-custom-task</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="3-verify-execution-order">
-    <h3>
+    <h5>
         <doc-anchor-trigger class="header-anchor-trigger" to="#3-verify-execution-order">#</doc-anchor-trigger>
         <span>3. Verify Execution Order</span>
-    </h3>
+    </h5>
 </doc-anchor-target>
 <p>The application runs scripts in ascending order based on their numeric prefixes. Scripts added to <code v-pre>/mnt/jrc-comms/hooks/boot.d</code> will be injected into <code v-pre>/opt/jrc/hooks/boot.d</code> based on script prefix automatically. For example:</p>
 <ul>
@@ -241,6 +241,7 @@ sudo chmod +x /mnt/jrc-comms/hooks/boot.d/99-custom-task</code></pre>
 <li>Scripts with the same prefix may execute in lexicographical order, but avoid ambiguity by using unique prefixes</li>
 <li>Scripts added to <code v-pre>/mnt/jrc-comms/hooks/boot.d</code> will persist AMI upgrades, stack clones, etc.</li>
 </ul>
+<p>By following this structure, you can extend the boot process with custom logic while maintaining predictable execution order.</p>
 <hr>
 <doc-anchor-target id="example-walkthrough">
     <h2>
@@ -263,42 +264,50 @@ echo &quot;Boot completed at: $(date)&quot; &gt;&gt; $LOGFILE</code></pre>
         <span>Troubleshooting Tips</span>
     </h2>
 </doc-anchor-target>
-<ol>
-<li><strong>Test your script manually</strong> before relying on the boot process:</li>
-</ol>
+<doc-anchor-target id="1-test-your-script-manually-before-relying-on-the-boot-process">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#1-test-your-script-manually-before-relying-on-the-boot-process">#</doc-anchor-trigger>
+        <span>1. <strong>Test your script manually</strong> before relying on the boot process:</span>
+    </h5>
+</doc-anchor-target>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">sudo /mnt/jrc-comms/hooks/boot.d/99-custom-task</code></pre>
 </doc-codeblock></div>
-<ol start="2">
-<li><p><strong>Check logs</strong> for errors (e.g., <code v-pre>/var/log/syslog</code> or <code v-pre>journalctl</code>)</p>
-</li>
-<li><p><strong>Validate script syntax</strong> using:</p>
-</li>
-</ol>
+<doc-anchor-target id="2-check-logs-for-errors-eg-varlogsyslog-or-journalctl">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#2-check-logs-for-errors-eg-varlogsyslog-or-journalctl">#</doc-anchor-trigger>
+        <span>2. <strong>Check logs</strong> for errors (e.g., <code v-pre>/var/log/syslog</code> or <code v-pre>journalctl</code>)</span>
+    </h5>
+</doc-anchor-target>
+<doc-anchor-target id="3-validate-script-syntax-using">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#3-validate-script-syntax-using">#</doc-anchor-trigger>
+        <span>3. <strong>Validate script syntax</strong> using:</span>
+    </h5>
+</doc-anchor-target>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">bash -n /mnt/jrc-comms/hooks/boot.d/99-custom-task</code></pre>
 </doc-codeblock></div>
-<p>By following this structure, you can extend the boot process with custom logic while maintaining predictable execution order.</p>
 <hr>
 <doc-anchor-target id="alternative-to-fstab-mounting-using-boot-hook-script">
-    <h3>
+    <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#alternative-to-fstab-mounting-using-boot-hook-script">#</doc-anchor-trigger>
         <span>Alternative to fstab Mounting Using Boot Hook Script</span>
-    </h3>
+    </h2>
 </doc-anchor-target>
 <p>AutoPilot&#x27;s boot hook system provides a more reliable alternative to <code v-pre>/etc/fstab</code> for bind mounts within dynamic environments, particularly when dealing with paths that might not be available during early boot stages.</p>
 <p>The following is an example of how you would implement a boot hook script to create hard links. Typically this would be accomplished within <code v-pre>/etc/fstab</code>.</p>
 <doc-anchor-target id="boot-hook-script-implementation">
-    <h2>
+    <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#boot-hook-script-implementation">#</doc-anchor-trigger>
         <span>Boot Hook Script Implementation</span>
-    </h2>
+    </h3>
 </doc-anchor-target>
 <doc-anchor-target id="1-create-mntjrc-commshooksbootd99-links-script">
-    <h3>
+    <h5>
         <doc-anchor-trigger class="header-anchor-trigger" to="#1-create-mntjrc-commshooksbootd99-links-script">#</doc-anchor-trigger>
-        <span>1. Create /mnt/jrc-comms/hooks/boot.d/99-links Script</span>
-    </h3>
+        <span>1. Create <code v-pre>/mnt/jrc-comms/hooks/boot.d/99-links</code> Script</span>
+    </h5>
 </doc-anchor-target>
 <p>Creates bind mounts after filesystems are available</p>
 <div class="codeblock-wrapper"><doc-codeblock>
@@ -310,30 +319,36 @@ mount --bind /var/www/domain.com/shared/var/salesexport /home/user/salesexport
 mount --bind /var/www/domain.com/shared/media/importexport /home/user/importexport</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="2-set-permissions">
-    <h3>
+    <h5>
         <doc-anchor-trigger class="header-anchor-trigger" to="#2-set-permissions">#</doc-anchor-trigger>
         <span>2. Set Permissions</span>
-    </h3>
+    </h5>
 </doc-anchor-target>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">sudo chmod +x /mnt/jrc-comms/hooks/boot.d/99-links
 sudo chown root:root /mnt/jrc-comms/hooks/boot.d/99-links</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="verification">
-    <h2>
+    <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#verification">#</doc-anchor-trigger>
         <span>Verification</span>
-    </h2>
+    </h3>
 </doc-anchor-target>
-<ol>
-<li><strong>Validate script syntax</strong>:</li>
-</ol>
+<doc-anchor-target id="1-validate-script-syntax">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#1-validate-script-syntax">#</doc-anchor-trigger>
+        <span>1. <strong>Validate script syntax</strong>:</span>
+    </h5>
+</doc-anchor-target>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">bash -n /mnt/jrc-comms/hooks/boot.d/99-custom-task</code></pre>
 </doc-codeblock></div>
-<ol start="2">
-<li><strong>Check active mounts</strong>:</li>
-</ol>
+<doc-anchor-target id="2-check-active-mounts">
+    <h5>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#2-check-active-mounts">#</doc-anchor-trigger>
+        <span>2. <strong>Check active mounts</strong>:</span>
+    </h5>
+</doc-anchor-target>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">mount | grep bind</code></pre>
 </doc-codeblock></div>
