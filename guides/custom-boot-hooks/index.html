@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.8.1.801773719688">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.9.0.802546775337">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 3.8.1">
+    <meta name="generator" content="Retype 3.9.0">
 
     <!-- Primary Meta Tags -->
-    <title>Add Custom Boot Hook to /mnt/jrc-comms/hooks/boot.d</title>
-    <meta name="title" content="Add Custom Boot Hook to /mnt/jrc-comms/hooks/boot.d">
-    <meta name="description" content="This guide explains how to add a custom boot hook to /mnt/jrc-comms/hooks/boot.d/ in applications that execute scripts in numerical order.">
+    <title>Create A Custom Boot Hook</title>
+    <meta name="title" content="Create A Custom Boot Hook">
+    <meta name="description" content="If you ever need to run custom tasks during the boot process of your instances, AutoPilot provides a flexible system for adding custom boot hook...">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.autopilot.jetrails.com/guides/custom-boot-hooks/">
@@ -19,23 +19,23 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.autopilot.jetrails.com/guides/custom-boot-hooks/">
-    <meta property="og:title" content="Add Custom Boot Hook to /mnt/jrc-comms/hooks/boot.d">
-    <meta property="og:description" content="This guide explains how to add a custom boot hook to /mnt/jrc-comms/hooks/boot.d/ in applications that execute scripts in numerical order.">
+    <meta property="og:title" content="Create A Custom Boot Hook">
+    <meta property="og:description" content="If you ever need to run custom tasks during the boot process of your instances, AutoPilot provides a flexible system for adding custom boot hook...">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://docs.autopilot.jetrails.com/guides/custom-boot-hooks/">
-    <meta property="twitter:title" content="Add Custom Boot Hook to /mnt/jrc-comms/hooks/boot.d">
-    <meta property="twitter:description" content="This guide explains how to add a custom boot hook to /mnt/jrc-comms/hooks/boot.d/ in applications that execute scripts in numerical order.">
+    <meta property="twitter:title" content="Create A Custom Boot Hook">
+    <meta property="twitter:description" content="If you ever need to run custom tasks during the boot process of your instances, AutoPilot provides a flexible system for adding custom boot hook...">
 
-    <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
+    <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=3.8.1.801773719688" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.9.0.802546775337" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.8.1.801773719688" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=3.8.1" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.8.1.801773719688" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.8.1.801773719688" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.9.0.802546775337" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=3.9.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.9.0.802546775337" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.9.0.802546775337" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -167,16 +167,19 @@
                                 <!-- Rendered if sidebar right is enabled -->
                                 <div id="docs-sidebar-right-toggle"></div>
                                 <!-- Page content  -->
-<doc-anchor-target id="add-custom-boot-hook-to-mntjrc-commshooksbootd" class="break-words">
+<doc-anchor-target id="create-a-custom-boot-hook" class="break-words">
     <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#add-custom-boot-hook-to-mntjrc-commshooksbootd">#</doc-anchor-trigger>
-        <span>Add Custom Boot Hook to /mnt/jrc-comms/hooks/boot.d</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#create-a-custom-boot-hook">#</doc-anchor-trigger>
+        <span>Create A Custom Boot Hook</span>
     </h1>
 </doc-anchor-target>
-<p>This guide explains how to add a custom boot hook to <code v-pre>/mnt/jrc-comms/hooks/boot.d/</code> in applications that execute scripts in numerical order. Follow these steps to ensure proper execution order and functionality.</p>
+<p>If you ever need to run custom tasks during the boot process of your instances, AutoPilot provides a flexible system for adding custom boot hook scripts.
+These scripts allow you to execute specific commands or tasks at boot time, ensuring that your environment is configured exactly as needed.</p>
+<p>In this article, we will walk through the process of creating such scripts and explain how they integrate with the existing boot sequence.
+Along the way, we will cover best practices, troubleshooting tips, and an example of how to implement a custom boot hook script.</p>
 <div class="flex mb-6">
-    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-blue-500 dark:bg-blue-400"></div>
-    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-blue-500 dark:bg-blue-400"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr-lg rounded-br-lg doc-callout bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
         <div class="flex items-center ml-4 h-7">
             <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-blue-500 dark:text-blue-400" width="22" height="22" viewBox="0 0 24 24" role="presentation">
                 <g fill="currentColor"><g>
@@ -188,169 +191,149 @@
         </div>
         <div class="pr-5 ml-3 w-full">
             <h5>Assumption:</h5>
-<p>We assume you have root access to modify files in <code v-pre>/mnt/jrc-comms/hooks/boot.d/</code>.</p>
+<p>You have root access and you have a shell open on your jump instance as the root user.</p>
         </div>
     </div>
 </div>
-<doc-anchor-target id="create-custom-boot-hook">
+<doc-anchor-target id="underlying-mechanism">
     <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#create-custom-boot-hook">#</doc-anchor-trigger>
-        <span>Create Custom Boot Hook</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#underlying-mechanism">#</doc-anchor-trigger>
+        <span>Underlying Mechanism</span>
     </h2>
 </doc-anchor-target>
-<doc-anchor-target id="1-create-your-script">
-    <h5>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#1-create-your-script">#</doc-anchor-trigger>
-        <span>1. Create Your Script</span>
-    </h5>
-</doc-anchor-target>
-<p>Create a new shell script with a filename starting with <code v-pre>99-</code> (to ensure it runs last). For example:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">#!/bin/bash
-/mnt/jrc-comms/hooks/boot.d/99-custom-task
-
-echo &quot;Running custom boot task...&quot;</code></pre>
-</doc-codeblock></div>
-<doc-anchor-target id="2-set-permissions-and-ownership">
-    <h5>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#2-set-permissions-and-ownership">#</doc-anchor-trigger>
-        <span>2. Set Permissions and Ownership</span>
-    </h5>
-</doc-anchor-target>
-<p>Make the script executable and ensure it’s owned by <code v-pre>root</code>:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">sudo chown root:root /mnt/jrc-comms/hooks/boot.d/99-custom-task
-sudo chmod +x /mnt/jrc-comms/hooks/boot.d/99-custom-task</code></pre>
-</doc-codeblock></div>
-<doc-anchor-target id="3-verify-execution-order">
-    <h5>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#3-verify-execution-order">#</doc-anchor-trigger>
-        <span>3. Verify Execution Order</span>
-    </h5>
-</doc-anchor-target>
+<p>Our platform executes a series of scripts on boot.
+These scripts mostly reside in <code v-pre>/opt/jrc/hooks/boot.d/</code> and are executed in numerical order based on their filenames.
+Before executing these scripts, the system checks for additional scripts in <code v-pre>/mnt/jrc-comms/hooks/boot.d/</code> and injects them into the execution order.
+If you create a script with the same filename as an existing script in <code v-pre>/opt/jrc/hooks/boot.d/</code>, it will override the original script.
+This allows you to extend or modify the boot process without altering the original scripts, ensuring your custom logic runs seamlessly alongside the default behavior.</p>
 <p>The application runs scripts in ascending order based on their numeric prefixes. Scripts added to <code v-pre>/mnt/jrc-comms/hooks/boot.d</code> will be injected into <code v-pre>/opt/jrc/hooks/boot.d</code> based on script prefix automatically. For example:</p>
 <ul>
 <li><code v-pre>05-mount-recovery-mount</code> runs first (found in <code v-pre>/opt/jrc/hooks/boot.d</code>)</li>
 <li><code v-pre>10-cluster-clean</code> runs next (found in <code v-pre>/opt/jrc/hooks/boot.d</code>)</li>
 <li><code v-pre>99-custom-task</code> runs last (added to <code v-pre>/mnt/jrc-comms/hooks/boot.d</code>)</li>
 </ul>
-<p><strong>Key rules:</strong></p>
+<p><strong>Key guidelines:</strong></p>
 <ul>
 <li>Prefixes determine execution order (e.g., <code v-pre>00-</code> to <code v-pre>99-</code>)</li>
 <li>Use two-digit numbering for clarity (e.g., <code v-pre>05-</code>, <code v-pre>10-</code>, <code v-pre>99-</code>)</li>
 <li>Scripts with the same prefix may execute in lexicographical order, but avoid ambiguity by using unique prefixes</li>
 <li>Scripts added to <code v-pre>/mnt/jrc-comms/hooks/boot.d</code> will persist AMI upgrades, stack clones, etc.</li>
 </ul>
-<p>By following this structure, you can extend the boot process with custom logic while maintaining predictable execution order.</p>
-<hr>
-<doc-anchor-target id="example-walkthrough">
+<p>By following this structure, you can extend the boot process with custom logic while maintaining predictable execution order.
+Adding scripts to persistent storage also prevents the need to reimage instances and replace them with new AMIs.</p>
+<doc-anchor-target id="example-hello-world">
     <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#example-walkthrough">#</doc-anchor-trigger>
-        <span>Example Walkthrough</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#example-hello-world">#</doc-anchor-trigger>
+        <span>Example: Hello World</span>
     </h2>
 </doc-anchor-target>
-<p>To log system time at the end of the boot process:</p>
+<p>In this example, we will simply create a custom boot hook script that will log a message to the screen.
+First we will need to create a new file located at <code v-pre>/mnt/jrc-comms/hooks/boot.d/99-custom-task</code> with the following contents:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
 <pre class="language-bash"><code v-pre class="language-bash">#!/bin/bash
-/mnt/jrc-comms/hooks/boot.d/99-custom-task
 
-LOGFILE=&quot;/var/log/custom-boot.log&quot;
-echo &quot;Boot completed at: $(date)&quot; &gt;&gt; $LOGFILE</code></pre>
+set -e
+
+# Import helper functions
+
+. /opt/jrc/lib/helpers
+
+# Preform task
+
+debug &quot;Hello World!&quot;
+</code></pre>
 </doc-codeblock></div>
-<hr>
+<p>Observe the following:</p>
+<ul>
+<li>The script has the prefix <code v-pre>99-</code>, which ensures it runs last in the boot sequence.</li>
+<li>It uses <code v-pre>set -e</code> to exit immediately if any command fails, preventing further execution in case of errors.</li>
+<li>It sources the helper functions from <code v-pre>/opt/jrc/lib/helpers</code> to utilize common utility functions like <code v-pre>debug</code>.</li>
+</ul>
+<p>In order for the script to execute correctly, it must have the right permissions and ownership.
+Each script must have the ownership of <code v-pre>root:root</code> and be executable. This is crucial for security and functionality and if not set correctly, then we refuse to run the script during the boot process.</p>
+<p>You can run the following commands to set the correct permissions and ownership to our example script:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">chown root:root /mnt/jrc-comms/hooks/boot.d/99-custom-task
+chmod +x /mnt/jrc-comms/hooks/boot.d/99-custom-task</code></pre>
+</doc-codeblock></div>
+<p>You can now test that your script is running by executing it manually:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">$ /mnt/jrc-comms/hooks/boot.d/99-custom-task
+DEBUG [06/06/25 16:39:27] [/mnt/jrc-comms/hooks/boot.d/99-custom-task]:      Hello World!</code></pre>
+</doc-codeblock></div>
+<p>You can also test how it runs during along side the existing boot scripts by running the following command:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">$ run-hooks boot</code></pre>
+</doc-codeblock></div>
+<p>If all goes well, you should see your debug message printed to the console, alongside the other boot messages.</p>
+<doc-anchor-target id="example-fstab-alternative">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#example-fstab-alternative">#</doc-anchor-trigger>
+        <span>Example: Fstab Alternative</span>
+    </h2>
+</doc-anchor-target>
+<p>AutoPilot&#x27;s boot hook system provides a more reliable alternative to <code v-pre>/etc/fstab</code> for bind mounts within dynamic environments, particularly when dealing with paths that might not be available during early boot stages.</p>
+<p>The following is an example of how you would implement a boot hook script to create bind mounts.
+Typically this would be accomplished within <code v-pre>/etc/fstab</code>.</p>
+<p>First, we will want to create the script in <code v-pre>/mnt/jrc-comms/hooks/boot.d/99-links</code> with the following contents:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">#!/bin/bash
+
+set -e
+
+# Import helper functions
+
+. /opt/jrc/lib/helpers
+
+# Create bind mounts for shared directories
+
+debug &quot;creating bind mounts...&quot;
+mount --bind /var/www/domain.com/shared/var/salesexport /home/user/salesexport
+mount --bind /var/www/domain.com/shared/media/importexport /home/user/importexport</code></pre>
+</doc-codeblock></div>
+<p>This script will create bind mounts on boot on all instances, alternatively you can only create these mounts on specific instances by checking the instance&#x27;s roles:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">#!/bin/bash
+
+set -e
+
+# Import helper functions
+
+. /opt/jrc/lib/helpers
+
+# Create bind mounts for shared directories only on web and jump instances
+
+if has_roles jump || has_roles web; then
+    debug &quot;creating bind mounts...&quot;
+    mount --bind /var/www/domain.com/shared/var/salesexport /home/user/salesexport
+    mount --bind /var/www/domain.com/shared/media/importexport /home/user/importexport
+else
+    debug &quot;skipping bind mounts for non-web/jump instance&quot;
+fi</code></pre>
+</doc-codeblock></div>
+<p>After creating the script, ensure it has the correct permissions and ownership:</p>
+<div class="codeblock-wrapper"><doc-codeblock>
+<pre class="language-bash"><code v-pre class="language-bash">chmod +x /mnt/jrc-comms/hooks/boot.d/99-links
+chown root:root /mnt/jrc-comms/hooks/boot.d/99-links</code></pre>
+</doc-codeblock></div>
+<p>You can now test the script&#x27;s functionality by triggering it manually or rebooting the instance.</p>
 <doc-anchor-target id="troubleshooting-tips">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#troubleshooting-tips">#</doc-anchor-trigger>
         <span>Troubleshooting Tips</span>
     </h2>
 </doc-anchor-target>
-<doc-anchor-target id="1-test-your-script-manually-before-relying-on-the-boot-process">
-    <h5>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#1-test-your-script-manually-before-relying-on-the-boot-process">#</doc-anchor-trigger>
-        <span>1. <strong>Test your script manually</strong> before relying on the boot process:</span>
-    </h5>
-</doc-anchor-target>
+<p>If you want to troubleshoot the boot process, you can look at the instance&#x27;s logs:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">sudo /mnt/jrc-comms/hooks/boot.d/99-custom-task</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">less /var/log/cloud-init-output.log</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="2-check-logs-for-errors-eg-varlogsyslog-or-journalctl">
-    <h5>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#2-check-logs-for-errors-eg-varlogsyslog-or-journalctl">#</doc-anchor-trigger>
-        <span>2. <strong>Check logs</strong> for errors (e.g., <code v-pre>/var/log/syslog</code> or <code v-pre>journalctl</code>)</span>
-    </h5>
-</doc-anchor-target>
-<doc-anchor-target id="3-validate-script-syntax-using">
-    <h5>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#3-validate-script-syntax-using">#</doc-anchor-trigger>
-        <span>3. <strong>Validate script syntax</strong> using:</span>
-    </h5>
-</doc-anchor-target>
+<p>Alternatively, you can use the <code v-pre>cluster</code> command to view the boot logs for all the instances and even follow the logs in real-time:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">bash -n /mnt/jrc-comms/hooks/boot.d/99-custom-task</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">cluster logs -f</code></pre>
 </doc-codeblock></div>
-<hr>
-<doc-anchor-target id="alternative-to-fstab-mounting-using-boot-hook-script">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#alternative-to-fstab-mounting-using-boot-hook-script">#</doc-anchor-trigger>
-        <span>Alternative to fstab Mounting Using Boot Hook Script</span>
-    </h2>
-</doc-anchor-target>
-<p>AutoPilot&#x27;s boot hook system provides a more reliable alternative to <code v-pre>/etc/fstab</code> for bind mounts within dynamic environments, particularly when dealing with paths that might not be available during early boot stages.</p>
-<p>The following is an example of how you would implement a boot hook script to create hard links. Typically this would be accomplished within <code v-pre>/etc/fstab</code>.</p>
-<doc-anchor-target id="boot-hook-script-implementation">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#boot-hook-script-implementation">#</doc-anchor-trigger>
-        <span>Boot Hook Script Implementation</span>
-    </h3>
-</doc-anchor-target>
-<doc-anchor-target id="1-create-mntjrc-commshooksbootd99-links-script">
-    <h5>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#1-create-mntjrc-commshooksbootd99-links-script">#</doc-anchor-trigger>
-        <span>1. Create <code v-pre>/mnt/jrc-comms/hooks/boot.d/99-links</code> Script</span>
-    </h5>
-</doc-anchor-target>
-<p>Creates bind mounts after filesystems are available</p>
+<p>Filtering based on role is also possible, for example, to view only the logs for the <code v-pre>web</code> role:</p>
 <div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">#!/bin/bash
-/mnt/jrc-comms/hooks/boot.d/99-links
-
-echo &quot;Creating bind mounts...&quot;
-mount --bind /var/www/domain.com/shared/var/salesexport /home/user/salesexport
-mount --bind /var/www/domain.com/shared/media/importexport /home/user/importexport</code></pre>
-</doc-codeblock></div>
-<doc-anchor-target id="2-set-permissions">
-    <h5>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#2-set-permissions">#</doc-anchor-trigger>
-        <span>2. Set Permissions</span>
-    </h5>
-</doc-anchor-target>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">sudo chmod +x /mnt/jrc-comms/hooks/boot.d/99-links
-sudo chown root:root /mnt/jrc-comms/hooks/boot.d/99-links</code></pre>
-</doc-codeblock></div>
-<doc-anchor-target id="verification">
-    <h3>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#verification">#</doc-anchor-trigger>
-        <span>Verification</span>
-    </h3>
-</doc-anchor-target>
-<doc-anchor-target id="1-validate-script-syntax">
-    <h5>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#1-validate-script-syntax">#</doc-anchor-trigger>
-        <span>1. <strong>Validate script syntax</strong>:</span>
-    </h5>
-</doc-anchor-target>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">bash -n /mnt/jrc-comms/hooks/boot.d/99-custom-task</code></pre>
-</doc-codeblock></div>
-<doc-anchor-target id="2-check-active-mounts">
-    <h5>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#2-check-active-mounts">#</doc-anchor-trigger>
-        <span>2. <strong>Check active mounts</strong>:</span>
-    </h5>
-</doc-anchor-target>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre class="language-bash"><code v-pre class="language-bash">mount | grep bind</code></pre>
+<pre class="language-bash"><code v-pre class="language-bash">cluster logs -f --role web</code></pre>
 </doc-codeblock></div>
 
                                 
@@ -365,7 +348,7 @@ sudo chown root:root /mnt/jrc-comms/hooks/boot.d/99-links</code></pre>
                                     </a>
                                 </div>
                             
-                                <nav class="flex mt-14">
+                                <nav class="print:hidden flex mt-14">
                                     <div class="w-1/2">
                                         <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-blue-500 dark:text-blue-400 border border-gray-300 hover:border-gray-400 dark:border-dark-650 dark:hover:border-dark-450 rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
@@ -389,13 +372,13 @@ sudo chown root:root /mnt/jrc-comms/hooks/boot.d/99-links</code></pre>
                             </footer>
                         </main>
                 
-                        <div class="border-t dark:border-dark-650 pt-6 mb-8">
-                            <footer class="flex flex-wrap items-center justify-between">
-                                <div>
+                        <div class="print:border-none border-t dark:border-dark-650 pt-6 mb-8">
+                            <footer class="flex flex-wrap items-center justify-between print:justify-center">
+                                <div class="print:hidden">
                                     <ul class="flex flex-wrap items-center text-sm">
                                     </ul>
                                 </div>
-                                <div class="docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2025. All rights reserved.</p></div>
+                                <div class="print:justify-center docs-copyright py-2 text-gray-500 dark:text-dark-350 text-sm leading-relaxed"><p>© Copyright 2025. All rights reserved.</p></div>
                             </footer>
                         </div>
                     </div>
@@ -424,6 +407,6 @@ sudo chown root:root /mnt/jrc-comms/hooks/boot.d/99-links</code></pre>
 
     <div id="docs-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "Add Custom Boot Hook to /mnt/jrc-comms/hooks/boot.d", level: 2, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+    <script data-cfasync="false">window.__DOCS__ = { "title": "Create A Custom Boot Hook", level: 2, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
 </body>
 </html>
