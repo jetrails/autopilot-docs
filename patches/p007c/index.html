@@ -9,24 +9,24 @@
     <meta name="generator" content="Retype 3.11.0">
 
     <!-- Primary Meta Tags -->
-    <title>Serve Web Files on Root Filesystem</title>
-    <meta name="title" content="Serve Web Files on Root Filesystem">
-    <meta name="description" content="Web files are accessible across your cluster deployment using NFS. While this provides a convenient way to share files, it can also introduce...">
+    <title>P007C</title>
+    <meta name="title" content="P007C">
+    <meta name="description" content="Issue Using Non-Default Varnish Version">
 
     <!-- Canonical -->
-    <link rel="canonical" href="https://docs.autopilot.jetrails.com/guides/serve-web-files-on-root-filesystem/">
+    <link rel="canonical" href="https://docs.autopilot.jetrails.com/patches/p007c/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://docs.autopilot.jetrails.com/guides/serve-web-files-on-root-filesystem/">
-    <meta property="og:title" content="Serve Web Files on Root Filesystem">
-    <meta property="og:description" content="Web files are accessible across your cluster deployment using NFS. While this provides a convenient way to share files, it can also introduce...">
+    <meta property="og:url" content="https://docs.autopilot.jetrails.com/patches/p007c/">
+    <meta property="og:title" content="P007C">
+    <meta property="og:description" content="Issue Using Non-Default Varnish Version">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://docs.autopilot.jetrails.com/guides/serve-web-files-on-root-filesystem/">
-    <meta property="twitter:title" content="Serve Web Files on Root Filesystem">
-    <meta property="twitter:description" content="Web files are accessible across your cluster deployment using NFS. While this provides a convenient way to share files, it can also introduce...">
+    <meta property="twitter:url" content="https://docs.autopilot.jetrails.com/patches/p007c/">
+    <meta property="twitter:title" content="P007C">
+    <meta property="twitter:description" content="Issue Using Non-Default Varnish Version">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
@@ -35,7 +35,6 @@
     <script data-cfasync="false" src="../../resources/js/config.js?v=3.11.0.806442922093" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.11.0" data-turbo-eval="false" defer></script>
     <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.11.0.806442922093" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=3.11.0.806442922093" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -168,104 +167,50 @@
                                 <!-- Rendered if sidebar right is enabled -->
                                 <div id="retype-sidebar-right-toggle"></div>
                                 <!-- Page content  -->
-<doc-anchor-target id="serve-web-files-on-root-filesystem" class="break-words">
+<doc-anchor-target id="p007c" class="break-words">
     <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#serve-web-files-on-root-filesystem">#</doc-anchor-trigger>
-        <span>Serve Web Files on Root Filesystem</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#p007c">#</doc-anchor-trigger>
+        <span>P007C</span>
     </h1>
 </doc-anchor-target>
-<p>Web files are accessible across your cluster deployment using NFS.
-While this provides a convenient way to share files, it can also introduce challenges, particularly around old code bases that still use modules that follow the PSR-0 standard.
-On newer deployments of Magento 2, this shouldn&#x27;t be an issue, but if you are working with older code bases, you may need to serve web files from the root filesystem instead of NFS.</p>
-<p>On newer deployments of Magento 2 (template version 5.2 and later), you can convert your cluster to serve web files from the root filesystem.
-This will resolve any slowness that you might feel when accessing the admin interface but it does come with some caveats.</p>
-<doc-anchor-target id="conversion-walkthrough">
+<p>Issue Using Non-Default Varnish Version</p>
+<doc-anchor-target id="description">
     <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#conversion-walkthrough">#</doc-anchor-trigger>
-        <span>Conversion walkthrough</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#description">#</doc-anchor-trigger>
+        <span>Description</span>
     </h2>
 </doc-anchor-target>
-<div class="flex mb-6">
-    <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
-    <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
-        <div class="flex items-center ml-4 h-7">
-            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-callout-primary" width="22" height="22" viewBox="0 0 24 24" role="presentation">
-                <g fill="currentColor"><g>
-                    <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
-                    <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
-                    <path fill="none" d="M0 0h24v24H0z"></path>
-                </g></g>
-            </svg>
-        </div>
-        <div class="pr-5 ml-3 w-full">
-            <h5>Assumptions:</h5>
-<p>You are logged in as the cluster user (uid 9001) and your site&#x27;s primary domain name is <strong>example.com</strong>.
-This feature is also only compatible with Magento at the moment, since other applications are not structured in a way that would support this type of setup.</p>
-        </div>
-    </div>
-</div>
-<p>First, we will need to modify the nginx configuration for your site to change where the root directory is set.
-Luckily, this is a simple process that can be done with the <code v-pre>vhost</code> command.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-none"><code v-pre class="language-none">vhost modify default-backend enable_sync_healthcheck=yes
-vhost modify example.com use_www_cache_root=yes</code></pre>
-</doc-codeblock></div>
-<p>If you made a lot of customizations to your nginx configs and deviated from the base template, then you may want to reimplement the changes modifing the nginx configs or implement the root change manually. You can review how much your configs deviate from the base template by running the following command:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-none"><code v-pre class="language-none">vhost diff example.com</code></pre>
-</doc-codeblock></div>
-<p>Next, we will need to create a custom boot hook that will sync the web files from the NFS share to the root filesystem on boot.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">sudo cp -p /opt/jrc/hooks-available/boot.d/93-sync-www-data-on-boot /mnt/jrc-comms/hooks/boot.d/</code></pre>
-</doc-codeblock></div>
-<p>Now all that is left is to execute the custom boot hook script to sync the web files from the NFS share to the root filesystem.
-The script also handles reloading nginx and restarting php-fpm.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">cluster exec --role web -- sudo /mnt/jrc-comms/hooks/boot.d/93-sync-www-data-on-boot</code></pre>
-</doc-codeblock></div>
-<doc-anchor-target id="boot-process">
+<p>This patch addresses an issue with building a non-default version of Varnish. The problem arises when the <code v-pre>install-vmods</code> script is not present in the <code v-pre>/mnt/jrc-confs/varnish</code> directory, which can lead to failures when building the custom Varnish docker image. This patch ensures that the <code v-pre>install-vmods</code> script is copied to the correct directory if it does not already exist, allowing for successful builds of non-default Varnish versions.</p>
+<doc-anchor-target id="impact">
     <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#boot-process">#</doc-anchor-trigger>
-        <span>Boot process</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#impact">#</doc-anchor-trigger>
+        <span>Impact</span>
     </h2>
 </doc-anchor-target>
-<p>Everything is handled in the boot hook script.
-The script syncs over web files for every site defined in <code v-pre>vhost</code> that has the <code v-pre>use_www_cache_root</code> option set to <code v-pre>yes</code>.
-Here are some high level steps of what happens during the boot process:</p>
-<ol>
-<li>Remove existing cache in <code v-pre>/var/www-cache</code> (faster copy process)</li>
-<li>Ensure that the web node can still serve web files by serving files from the NFS share.</li>
-<li>Start the copy process from the NFS share to the root filesystem.</li>
-<li>Start serving web files from the root filesystem.</li>
-</ol>
-<doc-anchor-target id="manually-syncing-changes">
+<p>There is absolutely no impact if this patch is applied.</p>
+<doc-anchor-target id="changes">
     <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#manually-syncing-changes">#</doc-anchor-trigger>
-        <span>Manually syncing changes</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#changes">#</doc-anchor-trigger>
+        <span>Changes</span>
     </h2>
 </doc-anchor-target>
-<p>If you need to sync changes that are made in your NFS share to the root filesystem, you can run the following command:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">cluster exec --role web -- sudo /mnt/jrc-comms/hooks/boot.d/93-sync-www-data-on-boot</code></pre>
-</doc-codeblock></div>
-<p>This will run the same script that is executed during the boot process and will sync the web files from the NFS share to the root filesystem while still serving files from the NFS share until the copy process is complete.</p>
-<p>If you would like to simply copy the files over without having the NFS fallback, you can run the following command:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">cluster exec --role web -- sudo /opt/jrc/sbin/sync-www-cache example.com</code></pre>
-</doc-codeblock></div>
-<doc-anchor-target id="manually-rotate-web-nodes">
+<ul>
+<li>Copy over the <code v-pre>install-vmods</code> script to the <code v-pre>/mnt/jrc-confs/varnish</code> directory if it does not already exist.</li>
+</ul>
+<doc-anchor-target id="if-you-accept">
     <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#manually-rotate-web-nodes">#</doc-anchor-trigger>
-        <span>Manually rotate web nodes</span>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#if-you-accept">#</doc-anchor-trigger>
+        <span>If You Accept</span>
     </h2>
 </doc-anchor-target>
-<p>If you find yourself in a situation where you need to manually rotate your web nodes one by one, then you can run the following command:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">cluster exec --role web -- sudo bash -c 'www-health mark unhealthy &amp;&amp; sleep infinity'</code></pre>
-</doc-codeblock></div>
-<p>This command will run on every web node and mark the node as unhealthy, which will cause the target group to stop sending traffic to the node.
-It will then fail health checks and a new web node will be started to replace it.
-We wait till infinity because we want to wait for that node to be fully shutdown before continuing to replace the next web node.</p>
+<p>You will be able to use non-default Varnish versions without issues.</p>
+<doc-anchor-target id="if-you-reject">
+    <h2>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#if-you-reject">#</doc-anchor-trigger>
+        <span>If You Reject</span>
+    </h2>
+</doc-anchor-target>
+<p>Changing the Varnish version may fail leading to the Varnish service not starting correctly.</p>
 
                                 
                                 <!-- Required only on API pages -->
@@ -273,7 +218,7 @@ We wait till infinity because we want to wait for that node to be fully shutdown
                             </div>
                             <footer id="retype-content-footer" class="clear-both">
                                 <div class="flex flex-wrap items-center justify-between mt-14">
-                                    <a id="retype-edit-this-page" class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-body-link font-body-link-weight hover:text-body-link-hover hover:underline" href="https://github.com/jetrails/autopilot-docs/blob/master/docs/guides/serve-web-files-on-root-filesystem/index.md" target="_blank" rel="noopener">
+                                    <a id="retype-edit-this-page" class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-body-link font-body-link-weight hover:text-body-link-hover hover:underline" href="https://github.com/jetrails/autopilot-docs/blob/master/docs/patches/P007C.md" target="_blank" rel="noopener">
                                         <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M20 12c-.55 0-1 .45-1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h7c.55 0 1-.45 1-1s-.45-1-1-1H4C2.35 3 1 4.35 1 6v14c0 1.65 1.35 3 3 3h14c1.65 0 3-1.35 3-3v-7c0-.55-.45-1-1-1z" /><path d="M22.21 1.79c-1.18-1.18-3.24-1.18-4.41 0l-9.5 9.5c-.13.13-.22.29-.26.46l-1 4c-.08.34.01.7.26.95.18.2.44.3.7.3.08 0 .16-.01.24-.03l4-1c.18-.04.34-.13.46-.26l9.5-9.5c1.22-1.22 1.22-3.2.01-4.42zm-1.42 3l-9.3 9.3-2.11.53.53-2.11 9.3-9.3c.42-.42 1.16-.42 1.59 0 .43.43.43 1.15-.01 1.58z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                         <span>Edit this page</span>
                                     </a>
@@ -281,23 +226,16 @@ We wait till infinity because we want to wait for that node to be fully shutdown
                             
                                 <nav id="retype-nextprev" class="print:hidden flex mt-14">
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../guides/onboard-magento-with-deployer/">
+                                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../patches/p006c/">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                                             <span>
                                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                                <span class="block mt-1">Onboard Magento With Deployer</span>
+                                                <span class="block mt-1">P​006​C</span>
                                             </span>
                                         </a>
                                     </div>
                             
                                     <div class="w-1/2">
-                                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../patches/">
-                                            <span>
-                                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                                <span class="block mt-1">Patches</span>
-                                            </span>
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                                        </a>
                                     </div>
                                 </nav>
                             </footer>
@@ -338,6 +276,6 @@ We wait till infinity because we want to wait for that node to be fully shutdown
 
     <div id="retype-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "Serve Web Files on Root Filesystem", level: 2, icon: "file", hasPrism: true, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+    <script data-cfasync="false">window.__DOCS__ = { "title": "P007C", level: 2, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
 </body>
 </html>
