@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.806442922093">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.11.0.806443020221">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.11.0">
@@ -30,11 +30,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=3.11.0.806442922093" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.11.0.806443020221" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.11.0.806442922093" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.11.0.806443020221" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.11.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.11.0.806442922093" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.11.0.806443020221" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -180,7 +180,7 @@
         <span>Description</span>
     </h2>
 </doc-anchor-target>
-<p>This patch addresses an issue with building a non-default version of Varnish. The problem arises when the <code v-pre>install-vmods</code> script is not present in the <code v-pre>/mnt/jrc-confs/varnish</code> directory, which can lead to failures when building the custom Varnish docker image. This patch ensures that the <code v-pre>install-vmods</code> script is copied to the correct directory if it does not already exist, allowing for successful builds of non-default Varnish versions.</p>
+<p>This patch addresses an issue with building a non-default version of Varnish. The problem arises when the <code v-pre>install-vmod</code> script is not present in the <code v-pre>/mnt/jrc-confs/varnish</code> directory, which can lead to failures when building the custom Varnish docker image. This patch ensures that the <code v-pre>install-vmod</code> script is copied to the correct directory if it does not already exist, allowing for successful builds of non-default Varnish versions.</p>
 <doc-anchor-target id="impact">
     <h2>
         <doc-anchor-trigger class="header-anchor-trigger" to="#impact">#</doc-anchor-trigger>
@@ -195,7 +195,7 @@
     </h2>
 </doc-anchor-target>
 <ul>
-<li>Copy over the <code v-pre>install-vmods</code> script to the <code v-pre>/mnt/jrc-confs/varnish</code> directory if it does not already exist.</li>
+<li>Copy over the <code v-pre>install-vmod</code> script to the <code v-pre>/mnt/jrc-confs/varnish</code> directory if it does not already exist.</li>
 </ul>
 <doc-anchor-target id="if-you-accept">
     <h2>
