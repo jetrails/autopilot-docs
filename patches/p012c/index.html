@@ -10,26 +10,26 @@
     <meta name="generator" content="Retype 4.4.0">
 
     <!-- Primary Meta Tags -->
-    <title>P010O</title>
-    <meta name="title" content="P010O">
-    <meta name="description" content="Install Composer 2.9.0">
+    <title>P012C</title>
+    <meta name="title" content="P012C">
+    <meta name="description" content="PolyShell Mitigation">
 
     <!-- Canonical -->
-    <link rel="canonical" href="https://docs.autopilot.jetrails.com/patches/p010o/">
+    <link rel="canonical" href="https://docs.autopilot.jetrails.com/patches/p012c/">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://docs.autopilot.jetrails.com/patches/p010o/">
-    <meta property="og:title" content="P010O">
-    <meta property="og:description" content="Install Composer 2.9.0">
+    <meta property="og:url" content="https://docs.autopilot.jetrails.com/patches/p012c/">
+    <meta property="og:title" content="P012C">
+    <meta property="og:description" content="PolyShell Mitigation">
     <meta property="og:site_name" content="AutoPilot Docs">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://docs.autopilot.jetrails.com/patches/p010o/">
-    <meta name="twitter:title" content="P010O">
-    <meta name="twitter:description" content="Install Composer 2.9.0">
+    <meta name="twitter:url" content="https://docs.autopilot.jetrails.com/patches/p012c/">
+    <meta name="twitter:title" content="P012C">
+    <meta name="twitter:description" content="PolyShell Mitigation">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
@@ -144,21 +144,22 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<h1 id="p010o">P010O</h1>
-<p>Install Composer 2.9.0</p>
+<h1 id="p012c">P012C</h1>
+<p>PolyShell Mitigation</p>
 <h2 id="description">Description</h2>
-<p>This patch installs Composer version 2.9.0 on your deployment. Composer 2.9.0 includes performance and security improvements. You can read more about the release <a href="https://blog.packagist.com/composer-2-9/">here</a>.</p>
+<p>A known vulnerability in Magento allows attackers to upload malicious files through the custom options file upload feature. These files are stored in the <code translate="no" v-pre>/media/custom_options/</code> directory and can potentially be executed directly via the web server, leading to remote code execution. This patch blocks public access to that path at the NGINX level.</p>
 <h2 id="impact">Impact</h2>
-<p>There will be downtime as new AMI images are rolled out to your deployment.</p>
+<p>There is no downtime expected from this change. NGINX will be reloaded on all web nodes after the configuration is applied.</p>
 <h2 id="changes">Changes</h2>
 <ul>
-<li>Install composer 2.9.0 on jump and web nodes</li>
-<li>Makes 2.9.0 available as a selectable composer version in your deployment</li>
+<li>Drops an NGINX configuration file (<code translate="no" v-pre>00-polyshell-mitigation.conf</code>) into each Magento site&#x27;s <code translate="no" v-pre>conf.d</code> directory that denies all access to <code translate="no" v-pre>/media/custom_options/</code>.</li>
+<li>Copies the same configuration into the vhost template directory so that any new sites provisioned in the future will also include the mitigation.</li>
+<li>Tests the NGINX configuration and reloads NGINX on all web nodes.</li>
 </ul>
 <h2 id="if-you-accept">If You Accept</h2>
-<p>Composer 2.9.0 will be installed on your deployment and available to select. Your current composer version will not be changed automatically.</p>
+<p>All public access to <code translate="no" v-pre>/media/custom_options/</code> will be blocked at the NGINX level, protecting your store from this attack vector. New sites created after the patch will also include the mitigation automatically.</p>
 <h2 id="if-you-reject">If You Reject</h2>
-<p>Composer 2.9.0 will not be available until you upgrade your deployment or accept this patch.</p>
+<p>The <code translate="no" v-pre>/media/custom_options/</code> path will remain publicly accessible, leaving your store vulnerable to potential remote code execution via malicious file uploads.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -166,7 +167,7 @@
             </div>
             <footer id="retype-content-footer" class="clear-both">
                 <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-14">
-                    <a id="retype-edit-this-page" class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-body-link font-body-link hover:text-body-link-hover hover:underline" href="https://github.com/jetrails/autopilot-docs/blob/master/docs/patches/P010O.md" target="_blank" rel="noopener">
+                    <a id="retype-edit-this-page" class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-body-link font-body-link hover:text-body-link-hover hover:underline" href="https://github.com/jetrails/autopilot-docs/blob/master/docs/patches/P012C.md" target="_blank" rel="noopener">
                         <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M20 12c-.55 0-1 .45-1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h7c.55 0 1-.45 1-1s-.45-1-1-1H4C2.35 3 1 4.35 1 6v14c0 1.65 1.35 3 3 3h14c1.65 0 3-1.35 3-3v-7c0-.55-.45-1-1-1z" /><path d="M22.21 1.79c-1.18-1.18-3.24-1.18-4.41 0l-9.5 9.5c-.13.13-.22.29-.26.46l-1 4c-.08.34.01.7.26.95.18.2.44.3.7.3.08 0 .16-.01.24-.03l4-1c.18-.04.34-.13.46-.26l9.5-9.5c1.22-1.22 1.22-3.2.01-4.42zm-1.42 3l-9.3 9.3-2.11.53.53-2.11 9.3-9.3c.42-.42 1.16-.42 1.59 0 .43.43.43 1.15-.01 1.58z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         <span>Edit this page</span>
                     </a>
@@ -174,23 +175,16 @@
             
                 <nav id="retype-nextprev" class="print:hidden flex mt-14">
                     <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../patches/p009c/">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../patches/p011c/">
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">P​009​C</span>
+                                <span class="block mt-1">P​011​C</span>
                             </span>
                         </a>
                     </div>
             
                     <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../patches/p011c/">
-                            <span>
-                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">P​011​C</span>
-                            </span>
-                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
-                        </a>
                     </div>
                 </nav>
             </footer>
@@ -231,6 +225,6 @@
 
     <div id="retype-overlay-target"></div>
 
-    <script data-cfasync="false">window.__DOCS__ = { "title": "P010O", level: 2, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
+    <script data-cfasync="false">window.__DOCS__ = { "title": "P012C", level: 2, icon: "file", hasPrism: false, hasMermaid: false, hasMath: false, tocDepth: 23 }</script>
 </body>
 </html>

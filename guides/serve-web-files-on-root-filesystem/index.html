@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.0.1.825521682386">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.4.0.827854218225">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.0.1">
+    <meta name="generator" content="Retype 4.4.0">
 
     <!-- Primary Meta Tags -->
     <title>Serve Web Files on Root Filesystem</title>
@@ -25,14 +25,20 @@
     <meta property="og:site_name" content="AutoPilot Docs">
     <meta property="og:locale" content="en_US">
 
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://docs.autopilot.jetrails.com/guides/serve-web-files-on-root-filesystem/">
+    <meta name="twitter:title" content="Serve Web Files on Root Filesystem">
+    <meta name="twitter:description" content="Web files are accessible across your cluster deployment using NFS. While this provides a convenient way to share files, it can also introduce challenges,">
+
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.0.1.825521682386" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.4.0.827854218225" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.0.1.825521682386" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.0.1" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.0.1.825521682386" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.0.1.825521682386" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.4.0.827854218225" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.4.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.4.0.827854218225" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.4.0.827854218225" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -47,10 +53,9 @@
             <!-- Logo -->
             <div class="flex items-center justify-between h-full py-2 md:w-75">
                 <div class="flex items-center px-2 md:px-6">
-                    <a id="retype-branding-logo" href="../../" class="flex items-center leading-snug text-xl">
+                    <a id="retype-branding-logo" href="https://docs.autopilot.jetrails.com/" class="flex items-center leading-snug text-xl">
                         <span class="w-10 mr-2 grow-0 shrink-0 overflow-hidden">
-                            <img class="max-h-10 dark:hidden md:inline-block" src="../../assets/images/logo.svg">
-                            <img class="max-h-10 hidden dark:inline-block" src="../../assets/images/logo.svg">
+                            <img class="max-h-10 md:inline-block" src="../../assets/images/logo.svg" alt="" width="45" height="40">
                         </span>
                         <span class="dark:text-white font-bold line-clamp-1 md:line-clamp-2">AutoPilot Docs</span>
                     </a>
@@ -140,28 +145,18 @@
                 <!-- Rendered if sidebar right is enabled -->
                 <div id="retype-sidebar-right-toggle"></div>
                 <!-- Page content  -->
-<doc-anchor-target id="serve-web-files-on-root-filesystem" class="break-words">
-    <h1>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#serve-web-files-on-root-filesystem">#</doc-anchor-trigger>
-        <span>Serve Web Files on Root Filesystem</span>
-    </h1>
-</doc-anchor-target>
+<h1 id="serve-web-files-on-root-filesystem">Serve Web Files on Root Filesystem</h1>
 <p>Web files are accessible across your cluster deployment using NFS.
 While this provides a convenient way to share files, it can also introduce challenges, particularly around old code bases that still use modules that follow the PSR-0 standard.
 On newer deployments of Magento 2, this shouldn&#x27;t be an issue, but if you are working with older code bases, you may need to serve web files from the root filesystem instead of NFS.</p>
 <p>On newer deployments of Magento 2 (template version 5.2 and later), you can convert your cluster to serve web files from the root filesystem.
 This will resolve any slowness that you might feel when accessing the admin interface but it does come with some caveats.</p>
-<doc-anchor-target id="conversion-walkthrough">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#conversion-walkthrough">#</doc-anchor-trigger>
-        <span>Conversion walkthrough</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="conversion-walkthrough">Conversion walkthrough</h2>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
     <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
         <div class="flex items-center ml-4 h-7">
-            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-callout-primary" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+            <svg xmlns="http://www.w3.org/2000/svg" class="block text-callout-primary" width="22" height="22" viewBox="0 0 24 24" role="presentation">
                 <g fill="currentColor"><g>
                     <path d="M12 1C5.93 1 1 5.93 1 12s4.93 11 11 11 11-4.93 11-11S18.07 1 12 1zm0 20c-4.96 0-9-4.04-9-9s4.04-9 9-9 9 4.04 9 9-4.04 9-9 9z"></path>
                     <path d="M12 11c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1s1-.45 1-1v-4c0-.55-.45-1-1-1zM12.01 7c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
@@ -178,29 +173,24 @@ This feature is also only compatible with Magento at the moment, since other app
 </div>
 <p>First, we will need to modify the nginx configuration for your site to change where the root directory is set.
 Luckily, this is a simple process that can be done with the <code translate="no" v-pre>vhost</code> command.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="conversion-walkthrough-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">vhost modify default-backend enable_sync_healthcheck=yes
 vhost modify example.com use_www_cache_root=yes</code></pre>
 </doc-codeblock></div>
 <p>If you made a lot of customizations to your nginx configs and deviated from the base template, then you may want to reimplement the changes modifing the nginx configs or implement the root change manually. You can review how much your configs deviate from the base template by running the following command:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="conversion-walkthrough-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-none"><code v-pre class="language-none">vhost diff example.com</code></pre>
 </doc-codeblock></div>
 <p>Next, we will need to create a custom boot hook that will sync the web files from the NFS share to the root filesystem on boot.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="conversion-walkthrough-code-3" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">sudo cp -p /opt/jrc/hooks-available/boot.d/93-sync-www-data-on-boot /mnt/jrc-comms/hooks/boot.d/</code></pre>
 </doc-codeblock></div>
 <p>Now all that is left is to execute the custom boot hook script to sync the web files from the NFS share to the root filesystem.
 The script also handles reloading nginx and restarting php-fpm.</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="conversion-walkthrough-code-4" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">cluster exec --role web -- sudo /mnt/jrc-comms/hooks/boot.d/93-sync-www-data-on-boot</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="boot-process">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#boot-process">#</doc-anchor-trigger>
-        <span>Boot process</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="boot-process">Boot process</h2>
 <p>Everything is handled in the boot hook script.
 The script syncs over web files for every site defined in <code translate="no" v-pre>vhost</code> that has the <code translate="no" v-pre>use_www_cache_root</code> option set to <code translate="no" v-pre>yes</code>.
 Here are some high level steps of what happens during the boot process:</p>
@@ -210,29 +200,19 @@ Here are some high level steps of what happens during the boot process:</p>
 <li>Start the copy process from the NFS share to the root filesystem.</li>
 <li>Start serving web files from the root filesystem.</li>
 </ol>
-<doc-anchor-target id="manually-syncing-changes">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#manually-syncing-changes">#</doc-anchor-trigger>
-        <span>Manually syncing changes</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="manually-syncing-changes">Manually syncing changes</h2>
 <p>If you need to sync changes that are made in your NFS share to the root filesystem, you can run the following command:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="manually-syncing-changes-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">cluster exec --role web -- sudo /mnt/jrc-comms/hooks/boot.d/93-sync-www-data-on-boot</code></pre>
 </doc-codeblock></div>
 <p>This will run the same script that is executed during the boot process and will sync the web files from the NFS share to the root filesystem while still serving files from the NFS share until the copy process is complete.</p>
 <p>If you would like to simply copy the files over without having the NFS fallback, you can run the following command:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="manually-syncing-changes-code-2" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">cluster exec --role web -- sudo /opt/jrc/sbin/sync-www-cache example.com</code></pre>
 </doc-codeblock></div>
-<doc-anchor-target id="manually-rotate-web-nodes">
-    <h2>
-        <doc-anchor-trigger class="header-anchor-trigger" to="#manually-rotate-web-nodes">#</doc-anchor-trigger>
-        <span>Manually rotate web nodes</span>
-    </h2>
-</doc-anchor-target>
+<h2 id="manually-rotate-web-nodes">Manually rotate web nodes</h2>
 <p>If you find yourself in a situation where you need to manually rotate your web nodes one by one, then you can run the following command:</p>
-<div class="codeblock-wrapper"><doc-codeblock>
+<div id="manually-rotate-web-nodes-code-1" class="codeblock-wrapper"><doc-codeblock>
 <pre translate="no" class="language-bash"><code v-pre class="language-bash">cluster exec --role web -- sudo bash -c 'www-health mark unhealthy &amp;&amp; sleep infinity'</code></pre>
 </doc-codeblock></div>
 <p>This command will run on every web node and mark the node as unhealthy, which will cause the target group to stop sending traffic to the node.
@@ -244,7 +224,7 @@ We wait till infinity because we want to wait for that node to be fully shutdown
                 <doc-toolbar-member-filter-no-results></doc-toolbar-member-filter-no-results>
             </div>
             <footer id="retype-content-footer" class="clear-both">
-                <div class="flex flex-wrap items-center justify-between mt-14">
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-14">
                     <a id="retype-edit-this-page" class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-body-link font-body-link hover:text-body-link-hover hover:underline" href="https://github.com/jetrails/autopilot-docs/blob/master/docs/guides/serve-web-files-on-root-filesystem/index.md" target="_blank" rel="noopener">
                         <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M20 12c-.55 0-1 .45-1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h7c.55 0 1-.45 1-1s-.45-1-1-1H4C2.35 3 1 4.35 1 6v14c0 1.65 1.35 3 3 3h14c1.65 0 3-1.35 3-3v-7c0-.55-.45-1-1-1z" /><path d="M22.21 1.79c-1.18-1.18-3.24-1.18-4.41 0l-9.5 9.5c-.13.13-.22.29-.26.46l-1 4c-.08.34.01.7.26.95.18.2.44.3.7.3.08 0 .16-.01.24-.03l4-1c.18-.04.34-.13.46-.26l9.5-9.5c1.22-1.22 1.22-3.2.01-4.42zm-1.42 3l-9.3 9.3-2.11.53.53-2.11 9.3-9.3c.42-.42 1.16-.42 1.59 0 .43.43.43 1.15-.01 1.58z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         <span>Edit this page</span>
