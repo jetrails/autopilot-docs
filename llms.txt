@@ -1,0 +1,28 @@
+﻿# Welcome
+
+> Welcome to the AutoPilot documentation! This is your go-to resource for all things related to AutoPilot. Please note that our documentation is currently a work in progress.
+
+- [Welcome](https://docs.autopilot.jetrails.com/index.md): Welcome
+- [Patches](https://docs.autopilot.jetrails.com/patches/index.md): Patches are categorized as Critical, Recommended, or Optional, indicating their severity and the urgency of application. This classification is reflected in the last character of the patch's name.
+
+## Guides
+
+- [Create A Custom Boot Hook](https://docs.autopilot.jetrails.com/guides/custom-boot-hooks/index.md): If you ever need to run custom tasks during the boot process of your instances, AutoPilot provides a flexible system for adding custom boot hook scripts. These scripts allow you to execute specific commands or tasks at boot time, ensuring that your environment is configured exactly as needed.
+- [Onboard Magento With Deployer](https://docs.autopilot.jetrails.com/guides/onboard-magento-with-deployer/index.md): This guide will walk you through onboarding your existing Magento Store onto the AutoPilot platform using Deployer. We will initially deploy a sample codebase onto a new deployment.
+- [Self-Hosted GitHub Action Runners](https://docs.autopilot.jetrails.com/guides/self-hosted-github-action-runners/index.md): This guide walks you through setting up self-hosted GitHub Action runners using Actions Runner Controller (ARC) on a K3s server deployed through JetRails AutoPilot.
+- [Serve Web Files on Root Filesystem](https://docs.autopilot.jetrails.com/guides/serve-web-files-on-root-filesystem/index.md): Web files are accessible across your cluster deployment using NFS. While this provides a convenient way to share files, it can also introduce challenges, particularly around old code bases that still use modules that follow the PSR-0 standard.
+
+## Patches
+
+- [P001C](https://docs.autopilot.jetrails.com/patches/p001c.md): Fixes data persistence issue with OpenSearch and Redis.
+- [P002R](https://docs.autopilot.jetrails.com/patches/p002r.md): PHP performance improvements.
+- [P003O](https://docs.autopilot.jetrails.com/patches/p003o.md): Removed SSH keys count limit.
+- [P004C](https://docs.autopilot.jetrails.com/patches/p004c.md): Daily Backups For RDS With Standard Retention
+- [P005O](https://docs.autopilot.jetrails.com/patches/p005o.md): Null-Bytes Within Rotated Log Files.
+- [P006C](https://docs.autopilot.jetrails.com/patches/p006c.md): Atomic Writes When Scaling Web Tier
+- [P007C](https://docs.autopilot.jetrails.com/patches/p007c.md): Issue Using Non-Default Varnish Version
+- [P008C](https://docs.autopilot.jetrails.com/patches/p008c.md): Stop Tracking RDS Engine Version
+- [P009C](https://docs.autopilot.jetrails.com/patches/p009c.md): Varnish Session Hijack Fix
+- [P010O](https://docs.autopilot.jetrails.com/patches/p010o.md): Install Composer 2.9.0
+- [P011C](https://docs.autopilot.jetrails.com/patches/p011c.md): Default HTTPS Listener Certificate
+- [P012C](https://docs.autopilot.jetrails.com/patches/p012c.md): PolyShell Mitigation
