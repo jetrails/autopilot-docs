@@ -26,3 +26,4 @@
 - [P010O](https://docs.autopilot.jetrails.com/patches/p010o.md): Install Composer 2.9.0
 - [P011C](https://docs.autopilot.jetrails.com/patches/p011c.md): Default HTTPS Listener Certificate
 - [P012C](https://docs.autopilot.jetrails.com/patches/p012c.md): PolyShell Mitigation
+- [P013C](https://docs.autopilot.jetrails.com/patches/p013c.md): CVE-2026-31431
