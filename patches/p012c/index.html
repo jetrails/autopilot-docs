@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.831566063981">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.831572287120">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.5.3">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>P012C</title>
     <meta name="title" content="P012C">
-    <meta name="description" content="PolyShell Mitigation">
+    <meta name="description" content="PolyShell (CVE-2025-54236)">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.autopilot.jetrails.com/patches/p012c/">
@@ -22,7 +22,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.autopilot.jetrails.com/patches/p012c/">
     <meta property="og:title" content="P012C">
-    <meta property="og:description" content="PolyShell Mitigation">
+    <meta property="og:description" content="PolyShell (CVE-2025-54236)">
     <meta property="og:site_name" content="AutoPilot Docs">
     <meta property="og:locale" content="en_US">
 
@@ -30,18 +30,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.autopilot.jetrails.com/patches/p012c/">
     <meta name="twitter:title" content="P012C">
-    <meta name="twitter:description" content="PolyShell Mitigation">
+    <meta name="twitter:description" content="PolyShell (CVE-2025-54236)">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://docs.autopilot.jetrails.com/patches/p012c.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.5.3.831566063981" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.5.3.831572287120" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.5.3.831566063981" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.5.3.831572287120" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.5.3.831566063981" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.5.3.831572287120" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -151,9 +151,9 @@
 
                 <!-- Page content  -->
 <h1 id="p012c">P012C</h1>
-<p>PolyShell Mitigation</p>
+<p>PolyShell (CVE-2025-54236)</p>
 <h2 id="description">Description</h2>
-<p>A known vulnerability in Magento allows attackers to upload malicious files through the custom options file upload feature. These files are stored in the <code translate="no" v-pre>/media/custom_options/</code> directory and can potentially be executed directly via the web server, leading to remote code execution. This patch blocks public access to that path at the NGINX level.</p>
+<p>A known vulnerability in Magento allows attackers to upload malicious files through the custom options file upload feature. These files are stored in the <code translate="no" v-pre>/media/custom_options/</code> directory and can potentially be executed directly via the web server, leading to remote code execution. This patch blocks public access to that path at the NGINX level. See <a href="https://nvd.nist.gov/vuln/detail/CVE-2025-54236">CVE-2025-54236</a> for more details.</p>
 <h2 id="impact">Impact</h2>
 <p>There is no downtime expected from this change. NGINX will be reloaded on all web nodes after the configuration is applied.</p>
 <h2 id="changes">Changes</h2>

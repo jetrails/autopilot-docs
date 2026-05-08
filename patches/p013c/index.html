@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.831566063981">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.831572287120">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.5.3">
@@ -12,7 +12,7 @@
     <!-- Primary Meta Tags -->
     <title>P013C</title>
     <meta name="title" content="P013C">
-    <meta name="description" content="CVE-2026-31431">
+    <meta name="description" content="Copy Fail (CVE-2026-31431)">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://docs.autopilot.jetrails.com/patches/p013c/">
@@ -22,7 +22,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://docs.autopilot.jetrails.com/patches/p013c/">
     <meta property="og:title" content="P013C">
-    <meta property="og:description" content="CVE-2026-31431">
+    <meta property="og:description" content="Copy Fail (CVE-2026-31431)">
     <meta property="og:site_name" content="AutoPilot Docs">
     <meta property="og:locale" content="en_US">
 
@@ -30,18 +30,18 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://docs.autopilot.jetrails.com/patches/p013c/">
     <meta name="twitter:title" content="P013C">
-    <meta name="twitter:description" content="CVE-2026-31431">
+    <meta name="twitter:description" content="Copy Fail (CVE-2026-31431)">
 
     <!-- Alternate Markdown -->
     <link rel="alternate" type="text/markdown" href="https://docs.autopilot.jetrails.com/patches/p013c.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.5.3.831566063981" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.5.3.831572287120" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.5.3.831566063981" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.5.3.831572287120" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.5.3.831566063981" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.5.3.831572287120" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -151,7 +151,7 @@
 
                 <!-- Page content  -->
 <h1 id="p013c">P013C</h1>
-<p>CVE-2026-31431</p>
+<p>Copy Fail (CVE-2026-31431)</p>
 <h2 id="description">Description</h2>
 <p><a href="https://nvd.nist.gov/vuln/detail/CVE-2026-31431">CVE-2026-31431</a>, also known as <a href="https://copy.fail">Copy Fail</a>, is a local privilege escalation vulnerability in the Linux kernel&#x27;s <code translate="no" v-pre>algif_aead</code> crypto subsystem. A logic flaw in <code translate="no" v-pre>authencesn</code>, combined with the <code translate="no" v-pre>AF_ALG</code> socket family and the <code translate="no" v-pre>splice()</code> system call, allows an unprivileged local user to perform a 4-byte page-cache write that leads to full root access. The exploit is reliable, requires no race conditions or kernel-specific offsets, and affects every Linux kernel built since 2017. It carries a CVSS v3.1 score of <strong>7.8 (HIGH)</strong> and was added to the CISA KEV catalog on May 1, 2026.</p>
 <h2 id="impact">Impact</h2>
@@ -182,7 +182,7 @@
             
                 <nav id="retype-nextprev" class="print:hidden flex mt-14">
                     <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../patches/p012c/">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../patches/p012c/">
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
@@ -192,6 +192,13 @@
                     </div>
             
                     <div class="w-1/2">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../patches/p014c/">
+                            <span>
+                                <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
+                                <span class="block mt-1">P​014​C</span>
+                            </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
+                        </a>
                     </div>
                 </nav>
             </footer>
