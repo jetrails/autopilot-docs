@@ -71,7 +71,7 @@ cluster exec --role web -- sudo /opt/jrc/sbin/sync-www-cache example.com
 If you find yourself in a situation where you need to manually rotate your web nodes one by one, then you can run the following command:
 
 ```bash
-cluster exec --role web -- sudo bash -c 'www-health mark unhealthy && sleep infinity'
+cluster exec --role web -- sudo bash -c '/opt/jrc/sbin/www-health mark unhealthy && sleep infinity'
 ```
 
 This command will run on every web node and mark the node as unhealthy, which will cause the target group to stop sending traffic to the node.
