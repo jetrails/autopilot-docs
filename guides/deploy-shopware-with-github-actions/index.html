@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.5.3.831924328234">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.836751562385">
 
     <!-- See retype.com -->
-    <meta name="generator" content="Retype 4.5.3">
+    <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
     <title>Deploy Shopware With GitHub Actions</title>
@@ -43,12 +43,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.5.3.831924328234" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.836751562385" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.5.3.831924328234" data-turbo-eval="false" defer></script>
-    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.5.3" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.5.3.831924328234" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.5.3.831924328234" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.836751562385" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.836751562385" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.836751562385" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -232,6 +232,11 @@ While you are there, also whitelist the SSH key using the contents of the <code 
 </figure>
 <h2 id="setup-github-repository-secrets">Setup Github Repository Secrets</h2>
 <p>Next, create the following <strong>Repository secrets</strong> in your Github repository under <strong>Settings</strong> &gt; <strong>Secrets and variables</strong> &gt; <strong>Actions</strong>:</p>
+<retype-table copy-text="| Name              | Description |
+| ----------------- | ----------- |
+| `SSH_USER`        | The cluster user of your Shopware deployment on AutoPilot |
+| `SSH_HOST`        | The elastic IP address of your Shopware deployment on AutoPilot |
+| `SSH_PRIVATE_KEY` | The private SSH key that we generated (`deploy_key`) |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -256,8 +261,14 @@ While you are there, also whitelist the SSH key using the contents of the <code 
 </tbody>
 </table>
 </div>
+</retype-table>
 <p>Additionally, we will set credentials to setup a database connection since the default Shopware recipe requires it.
 You can find these values in the <strong>Database</strong> card on the <strong>Overview</strong> tab of your Shopware deployment in the AutoPilot dashboard.</p>
+<retype-table copy-text="| Name      | Description |
+| --------- | ----------- |
+| `DB_USER` | The database user for your Shopware deployment on AutoPilot |
+| `DB_PASS` | The database password for your Shopware deployment on AutoPilot |
+| `DB_NAME` | The database name for your Shopware deployment on AutoPilot |">
 <div class="table-wrapper scrollbar overflow-hidden">
 <table class="comfortable">
 <thead>
@@ -282,6 +293,7 @@ You can find these values in the <strong>Database</strong> card on the <strong>O
 </tbody>
 </table>
 </div>
+</retype-table>
 <figure class="content-center">
     <img src="images/github-repository-secrets.png" alt="Github Repository Secrets" class="max-w-full h-auto rounded-image-rounded border-image-border border-image-border-width" width="2784" height="2324" />
     <figcaption class="caption">Github Repository Secrets</figcaption>

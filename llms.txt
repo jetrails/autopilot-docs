@@ -7,6 +7,7 @@
 
 ## Guides
 
+- [AutoPilot Deploy Pipeline](https://docs.autopilot.jetrails.com/guides/autopilot-deploy-pipeline/index.md): The AutoPilot Deploy Pipeline lets you deploy your codebase straight from a git repository onto your AutoPilot deployment. It builds on our source control
 - [Create A Custom Boot Hook](https://docs.autopilot.jetrails.com/guides/custom-boot-hooks/index.md): If you ever need to run custom tasks during the boot process of your instances, AutoPilot provides a flexible system for adding custom boot hook scripts. These scripts allow you to execute specific commands or tasks at boot time, ensuring that your environment is configured exactly as needed.
 - [Deploy Shopware With GitHub Actions](https://docs.autopilot.jetrails.com/guides/deploy-shopware-with-github-actions/index.md): This guide takes you from having no deployment pipeline to a fully automated GitOps workflow for your Shopware store on JetRails AutoPilot. Using Deployer
 - [Onboard Magento With Deployer](https://docs.autopilot.jetrails.com/guides/onboard-magento-with-deployer/index.md): This guide will walk you through onboarding your existing Magento Store onto the AutoPilot platform using Deployer. We will initially deploy a sample codebase onto a new deployment.

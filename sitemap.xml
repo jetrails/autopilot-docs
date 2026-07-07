@@ -2,86 +2,90 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://docs.autopilot.jetrails.com/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/patches/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
+  </url>
+  <url>
+    <loc>https://docs.autopilot.jetrails.com/guides/autopilot-deploy-pipeline/</loc>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/guides/deploy-shopware-with-github-actions/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/guides/custom-boot-hooks/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/guides/self-hosted-github-action-runners/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/guides/onboard-magento-with-deployer/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/guides/serve-web-files-on-root-filesystem/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/patches/p001c/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/patches/p002r/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/patches/p003o/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/patches/p004c/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/patches/p005o/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/patches/p006c/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/patches/p007c/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/patches/p008c/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/patches/p009c/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/patches/p010o/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/patches/p011c/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/patches/p012c/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/patches/p013c/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
   <url>
     <loc>https://docs.autopilot.jetrails.com/patches/p014c/</loc>
-    <lastmod>2026-05-12T13:04:48Z</lastmod>
+    <lastmod>2026-07-07T09:58:49Z</lastmod>
   </url>
 </urlset>
