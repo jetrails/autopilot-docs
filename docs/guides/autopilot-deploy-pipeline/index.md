@@ -69,7 +69,7 @@ Out of the box we ship four steps, and what each one actually does depends on th
 | `30-deploy-release` | Runs PHP Deployer against the `autopilot` host if a `deploy.php` is present |
 | `40-restart-services` | Restarts php-fpm and varnish and flushes redis-cache on the relevant nodes |
 
-Steps run in order based on their numeric prefix.
+Steps run in order based on their numeric prefix, and if any step exits non-zero the deploy stops there and skips everything after it.
 Each step name has to match the pattern `^[0-9]+(-[a-zA-Z0-9]+)+$`, so a leading number followed by hyphen-separated words, for example `50-example-step-name`.
 
 ## Override The Pipeline
@@ -140,6 +140,10 @@ Our default steps also get more verbose when the commit message contains `[DEBUG
 Both `composer install` and `dep deploy` switch to verbose output in that case, which surfaces a lot more detail about what each one is doing.
 This is handy when a deploy is failing and the normal output does not tell you enough.
 You can put `[DEBUG]` anywhere on the first line of the commit message.
+
+If a push or manual trigger does not start a deploy at all, check two things.
+The deployment has to be awake, since a hibernating deployment ignores pushes and blocks manual triggers until it is running again.
+The integration also has to be active, since a GitHub integration that has been suspended will not trigger deploys until you unsuspend it.
 
 ## Disconnect
 
