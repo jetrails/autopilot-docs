@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.836751562385">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.836849531628">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -37,12 +37,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.836751562385" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.836849531628" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.836751562385" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.836849531628" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.836751562385" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.836751562385" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.836849531628" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.836849531628" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -229,7 +229,7 @@ Out of the box we ship four steps, and what each one actually does depends on th
 </table>
 </div>
 </retype-table>
-<p>Steps run in order based on their numeric prefix.
+<p>Steps run in order based on their numeric prefix, and if any step exits non-zero the deploy stops there and skips everything after it.
 Each step name has to match the pattern <code translate="no" v-pre>^[0-9]+(-[a-zA-Z0-9]+)+$</code>, so a leading number followed by hyphen-separated words, for example <code translate="no" v-pre>50-example-step-name</code>.</p>
 <h2 id="override-the-pipeline">Override The Pipeline</h2>
 <p>You can extend or replace any part of the pipeline by adding your own scripts to a <code translate="no" v-pre>.jetrails/steps.d/</code> folder in the root of your repository.
@@ -375,6 +375,9 @@ This is the same output you see in the run details on the dashboard, but combine
 Both <code translate="no" v-pre>composer install</code> and <code translate="no" v-pre>dep deploy</code> switch to verbose output in that case, which surfaces a lot more detail about what each one is doing.
 This is handy when a deploy is failing and the normal output does not tell you enough.
 You can put <code translate="no" v-pre>[DEBUG]</code> anywhere on the first line of the commit message.</p>
+<p>If a push or manual trigger does not start a deploy at all, check two things.
+The deployment has to be awake, since a hibernating deployment ignores pushes and blocks manual triggers until it is running again.
+The integration also has to be active, since a GitHub integration that has been suspended will not trigger deploys until you unsuspend it.</p>
 <h2 id="disconnect">Disconnect</h2>
 <p>If you want to stop deploying to a deployment, use the <strong>Disconnect</strong> button in <strong>Deploy Settings</strong>.
 This removes the deploy trigger, deletes the deploy key from your source control provider, and removes the private key file from the jump host.
