@@ -30,3 +30,4 @@
 - [P012C](https://docs.autopilot.jetrails.com/patches/p012c.md): PolyShell (CVE-2025-54236)
 - [P013C](https://docs.autopilot.jetrails.com/patches/p013c.md): Copy Fail (CVE-2026-31431)
 - [P014C](https://docs.autopilot.jetrails.com/patches/p014c.md): Dirty Frag (CVE-2026-43284)
+- [P015C](https://docs.autopilot.jetrails.com/patches/p015c.md): Magento NGINX Hardening (APSB26-73)
