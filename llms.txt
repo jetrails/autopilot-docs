@@ -32,3 +32,4 @@
 - [P014C](https://docs.autopilot.jetrails.com/patches/p014c.md): Dirty Frag (CVE-2026-43284)
 - [P015C](https://docs.autopilot.jetrails.com/patches/p015c.md): Magento NGINX Hardening (APSB26-73)
 - [P016C](https://docs.autopilot.jetrails.com/patches/p016c.md): Database Bin Logs
+- [P017R](https://docs.autopilot.jetrails.com/patches/p017r.md): Limit PHP Entrypoints
