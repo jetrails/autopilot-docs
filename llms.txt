@@ -16,6 +16,10 @@
 - [Serve Web Files on Root Filesystem](https://docs.autopilot.jetrails.com/guides/serve-web-files-on-root-filesystem/index.md): Web files are accessible across your cluster deployment using NFS. While this provides a convenient way to share files, it can also introduce challenges, particularly around old code bases that still use modules that follow the PSR-0 standard.
 - [Temporarily Mount The Media S3 Bucket](https://docs.autopilot.jetrails.com/guides/temporarily-mount-the-media-s3-bucket/index.md): Once your media lives in an S3 bucket, you can't just cd into pub/media to look around anymore. The media-bucket command on your jump host mounts the bucket as a folder for a little while, so you can browse it and copy files in and out with the tools you already use.
 
+## Manual
+
+- [Team Members](https://docs.autopilot.jetrails.com/manual/team-members.md): Team members let other people work in your organization without sharing a login. Everyone you invite gets their own AutoPilot account and a role that decides what they can see and do.
+
 ## Patches
 
 - [P001C](https://docs.autopilot.jetrails.com/patches/p001c.md): Fixes data persistence issue with OpenSearch and Redis.
