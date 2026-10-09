@@ -10,30 +10,30 @@
     <meta name="generator" content="Retype 4.6.0">
 
     <!-- Primary Meta Tags -->
-    <title>Enable S3 Media Storage For Magento</title>
-    <meta name="title" content="Enable S3 Media Storage For Magento">
-    <meta name="description" content="Magento can keep everything under pub/media in an S3 bucket instead of on your deployment's disk. NGINX then serves those files straight out of the bucket, so most image requests never touch PHP or your shared storage.">
+    <title>Temporarily Mount The Media S3 Bucket</title>
+    <meta name="title" content="Temporarily Mount The Media S3 Bucket">
+    <meta name="description" content="Once your media lives in an S3 bucket, you can't just cd into pub/media to look around anymore. The media-bucket command on your jump host mounts the bucket as a folder for a little while, so you can browse it and copy files in and out with the tools you already use.">
 
     <!-- Canonical -->
-    <link rel="canonical" href="https://docs.autopilot.jetrails.com/guides/enable-s3-media-storage-for-magento/">
+    <link rel="canonical" href="https://docs.autopilot.jetrails.com/guides/temporarily-mount-the-media-s3-bucket/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://docs.autopilot.jetrails.com/sitemap.xml">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://docs.autopilot.jetrails.com/guides/enable-s3-media-storage-for-magento/">
-    <meta property="og:title" content="Enable S3 Media Storage For Magento">
-    <meta property="og:description" content="Magento can keep everything under pub/media in an S3 bucket instead of on your deployment's disk. NGINX then serves those files straight out of the bucket, so most image requests never touch PHP or your shared storage.">
+    <meta property="og:url" content="https://docs.autopilot.jetrails.com/guides/temporarily-mount-the-media-s3-bucket/">
+    <meta property="og:title" content="Temporarily Mount The Media S3 Bucket">
+    <meta property="og:description" content="Once your media lives in an S3 bucket, you can't just cd into pub/media to look around anymore. The media-bucket command on your jump host mounts the bucket as a folder for a little while, so you can browse it and copy files in and out with the tools you already use.">
     <meta property="og:site_name" content="AutoPilot Docs">
     <meta property="og:locale" content="en_US">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://docs.autopilot.jetrails.com/guides/enable-s3-media-storage-for-magento/">
-    <meta name="twitter:title" content="Enable S3 Media Storage For Magento">
-    <meta name="twitter:description" content="Magento can keep everything under pub/media in an S3 bucket instead of on your deployment's disk. NGINX then serves those files straight out of the bucket, so most image requests never touch PHP or your shared storage.">
+    <meta name="twitter:url" content="https://docs.autopilot.jetrails.com/guides/temporarily-mount-the-media-s3-bucket/">
+    <meta name="twitter:title" content="Temporarily Mount The Media S3 Bucket">
+    <meta name="twitter:description" content="Once your media lives in an S3 bucket, you can't just cd into pub/media to look around anymore. The media-bucket command on your jump host mounts the bucket as a folder for a little while, so you can browse it and copy files in and out with the tools you already use.">
 
     <!-- Alternate Markdown -->
-    <link rel="alternate" type="text/markdown" href="https://docs.autopilot.jetrails.com/guides/enable-s3-media-storage-for-magento/index.md">
+    <link rel="alternate" type="text/markdown" href="https://docs.autopilot.jetrails.com/guides/temporarily-mount-the-media-s3-bucket/index.md">
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
@@ -151,10 +151,11 @@
                 <doc-page-actions></doc-page-actions>
 
                 <!-- Page content  -->
-<h1 id="enable-s3-media-storage-for-magento">Enable S3 Media Storage For Magento</h1>
-<p>Magento can keep everything under <code translate="no" v-pre>pub/media</code> in an S3 bucket instead of on your deployment&#x27;s disk.
-NGINX then serves those files straight out of the bucket, so most image requests never touch PHP or your shared storage.
-This guide walks you through enabling it on an existing deployment.</p>
+<h1 id="temporarily-mount-the-media-s3-bucket">Temporarily Mount The Media S3 Bucket</h1>
+<p>Once your media lives in an S3 bucket, you can&#x27;t just <code translate="no" v-pre>cd</code> into <code translate="no" v-pre>pub/media</code> to look around anymore.
+The <code translate="no" v-pre>media-bucket</code> command on your jump host mounts the bucket as a folder for a little while, so you can browse it and copy files in and out with the tools you already use.
+It&#x27;s meant for quick jobs like checking that an image made it up, or pulling down a handful of files.
+It is not a permanent replacement for <code translate="no" v-pre>pub/media</code>.</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
     <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
@@ -170,81 +171,16 @@ This guide walks you through enabling it on an existing deployment.</p>
         <div class="pr-5 ml-3 w-full">
             <h5>Assumptions:</h5>
 <p>Your site&#x27;s primary domain name is <code translate="no" v-pre>example.com</code> and you are logged in to the jump host as the cluster user.
-We also assume your media bucket is named <code translate="no" v-pre>jrc-123-medias3bucket-456</code>.</p>
+We also assume your media bucket is named <code translate="no" v-pre>jrc-123-medias3bucket-456</code>.
+For the SFTP and rsync examples, your cluster user is <code translate="no" v-pre>jrc-abcd-1234</code> and your deployment&#x27;s elastic IP address is <code translate="no" v-pre>1.2.3.4</code>.</p>
         </div>
     </div>
 </div>
-<h2 id="request-the-bucket">Request The Bucket</h2>
-<p>The bucket isn&#x27;t something you can create yourself, so open a ticket with JetRails support and ask for an S3 media bucket for your deployment.
-We add the bucket, its access policy, and the instance permissions to your deployment&#x27;s infrastructure.</p>
-<p>Once that&#x27;s done, the bucket name shows up on your deployment&#x27;s Overview tab under <strong>Media S3 Bucket</strong>.
-It looks something like this:</p>
-<div id="request-the-bucket-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-none"><code v-pre class="language-none">jrc-123-medias3bucket-456</code></pre>
-</doc-codeblock></div>
-<p>You&#x27;ll need that name for the rest of this guide.
-Everything else happens over SSH on the jump host.</p>
-<h2 id="check-how-much-media-you-have">Check How Much Media You Have</h2>
-<p>This is what decides how long the upload takes, so check it before you start anything else.</p>
-<div id="check-how-much-media-you-have-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">du -sh /var/www/example.com/shared/pub/media
-find /var/www/example.com/shared/pub/media -type f | wc -l</code></pre>
-</doc-codeblock></div>
-<p>A store with 100 GB of media takes several hours to upload, so plan around that.</p>
-<h2 id="point-magento-at-the-bucket">Point Magento At The Bucket</h2>
-<p>Change into the site&#x27;s live directory.</p>
-<div id="point-magento-at-the-bucket-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">cd /var/www/example.com/live</code></pre>
-</doc-codeblock></div>
-<p>Turn off database media storage first.</p>
-<div id="point-magento-at-the-bucket-code-2" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">php bin/magento config:set system/media_storage_configuration/media_database 0 --no-interaction</code></pre>
-</doc-codeblock></div>
-<p>Then enable the S3 driver.</p>
-<div id="point-magento-at-the-bucket-code-3" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">php bin/magento setup:config:set --no-interaction \
-    --remote-storage-driver=aws-s3 \
-    --remote-storage-bucket=jrc-123-medias3bucket-456 \
-    --remote-storage-region=us-east-1</code></pre>
-</doc-codeblock></div>
-<p>No access key or secret is needed here.
-The server authenticates to S3 using its instance role.</p>
-<p>Confirm it got written.</p>
-<div id="point-magento-at-the-bucket-code-4" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">grep -A6 remote_storage app/etc/env.php</code></pre>
-</doc-codeblock></div>
-<p>The driver value should read <code translate="no" v-pre>aws-s3</code> now instead of <code translate="no" v-pre>file</code>.</p>
-<h2 id="upload-existing-media">Upload Existing Media</h2>
-<p>This copies everything in <code translate="no" v-pre>pub/media</code> up to the bucket.
-It runs for a long time on a large store, so start it detached and it will survive your SSH session closing.</p>
-<div id="upload-existing-media-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">cd /var/www/example.com/live
-setsid nohup php bin/magento remote-storage:sync --no-interaction \
-    &gt; ~/remote-storage-sync.log 2&gt;&amp;1 &lt; /dev/null &amp;</code></pre>
-</doc-codeblock></div>
-<p>You can watch it with either of these.</p>
-<div id="upload-existing-media-code-2" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">tail -f ~/remote-storage-sync.log
-aws s3 ls s3://jrc-123-medias3bucket-456 --recursive --summarize | tail -3</code></pre>
-</doc-codeblock></div>
-<p>The command is safe to re-run.
-If it gets interrupted, just start it again.</p>
-<p>Files land under a <code translate="no" v-pre>media/</code> prefix in the bucket, mirroring your <code translate="no" v-pre>pub/media</code> folder.</p>
-<div id="upload-existing-media-code-3" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-none"><code v-pre class="language-none">media/catalog/product/a/b/example.jpg</code></pre>
-</doc-codeblock></div>
-<p>Let this finish before you move on, so NGINX isn&#x27;t serving out of a half-filled bucket.</p>
-<h2 id="serve-media-through-nginx">Serve Media Through NGINX</h2>
-<p>Your NGINX config is generated from a template by the <code translate="no" v-pre>vhost</code> command, so anything you edit directly in the config files gets overwritten the next time it regenerates.
-Instead you set a parameter on the site and let <code translate="no" v-pre>vhost</code> rewrite the config for you.</p>
-<p>To see which template your site uses and which parameters it takes:</p>
-<div id="serve-media-through-nginx-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">vhost list
-vhost template info jrc-magento2</code></pre>
-</doc-codeblock></div>
-<p>The parameter you want is <code translate="no" v-pre>s3_media_bucket_name</code>, described as &quot;S3 bucket name for media storage, blank to disable&quot;.
-Support for it is built into the standard Magento template, so nothing has to be added to your deployment.
-Setting it just switches which version of the media block gets generated.</p>
+<h2 id="requirements">Requirements</h2>
+<p>Your deployment needs a media S3 bucket.
+If you don&#x27;t have one yet, follow the <a href="../enable-s3-media-storage-for-magento/">Enable S3 Media Storage For Magento</a> guide first.</p>
+<p>The command only exists on the jump host.
+It mounts the bucket there and nowhere else.</p>
 <div class="flex mb-6">
     <div class="shrink-0 w-1.5 rounded-tl-lg rounded-bl-lg bg-callout-primary"></div>
     <div class="flex w-full py-4 border border-l-0 rounded-tr-lg rounded-br-lg doc-callout bg-callout-base-bg border-callout-base-border" role="alert">
@@ -259,86 +195,136 @@ Setting it just switches which version of the media block gets generated.</p>
         </div>
         <div class="pr-5 ml-3 w-full">
             <h5>Older Deployments</h5>
-<p>If <code translate="no" v-pre>vhost template info</code> doesn&#x27;t list <code translate="no" v-pre>s3_media_bucket_name</code> at all, your deployment is running an older machine image from before this support was added.
-Mention that on your ticket when you request the bucket and we&#x27;ll update your deployment&#x27;s templates for you.</p>
+<p>If <code translate="no" v-pre>/opt/jrc/sbin/media-bucket</code> doesn&#x27;t exist on your jump host, your deployment is running an older machine image from before this command was added.
+Open a ticket with JetRails support and we&#x27;ll get your deployment updated.</p>
         </div>
     </div>
 </div>
-<p>To see what your site is set to right now:</p>
-<div id="serve-media-through-nginx-code-2" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">vhost info example.com</code></pre>
+<h2 id="mount-the-bucket">Mount The Bucket</h2>
+<div id="mount-the-bucket-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">sudo /opt/jrc/sbin/media-bucket mount</code></pre>
 </doc-codeblock></div>
-<p>Before modifying, run <code translate="no" v-pre>vhost diff example.com</code> to see if your NGINX configs deviated from the template&#x27;s original output.
-Once you are comfortable moving forward, set the bucket name:</p>
-<div id="serve-media-through-nginx-code-3" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">vhost modify example.com s3_media_bucket_name=jrc-123-medias3bucket-456</code></pre>
+<p>You&#x27;ll see a warning every time you mount it.</p>
+<div id="mount-the-bucket-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">WARNING: Do NOT leave media bucket mounted. Unmount when you are done with it by running:
+         &quot;/opt/jrc/sbin/media-bucket unmount&quot;
+
+bucket jrc-123-medias3bucket-456 is mounted at /mnt/jrc-123-medias3bucket-456
+bucket is available at /var/www/example.com/media-bucket</code></pre>
 </doc-codeblock></div>
-<p>Here&#x27;s what that actually changes.
-Inside <code translate="no" v-pre>location /media/</code>, the block matching image and asset extensions currently serves files off local disk:</p>
-<div id="serve-media-through-nginx-code-4" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-nginx"><code v-pre class="language-nginx">location ~* \.(ico|jpg|jpeg|png|gif|svg|svgz|webp|avif|avifs|js|css|eot|ttf|otf|woff|woff2)$ {
-    add_header Cache-Control &quot;public&quot;;
-    expires +1y;
-    try_files $uri $uri/ /get.php$is_args$args;
-}</code></pre>
+<p>The bucket gets mounted at <code translate="no" v-pre>/mnt/jrc-123-medias3bucket-456</code> and a link to it is placed in your site&#x27;s folder.
+Magento keeps everything under a <code translate="no" v-pre>media/</code> prefix, so your files show up here:</p>
+<div id="mount-the-bucket-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">ls /var/www/example.com/media-bucket/media/catalog/product</code></pre>
 </doc-codeblock></div>
-<p>After the change, that block proxies the request to your bucket instead:</p>
-<div id="serve-media-through-nginx-code-5" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-nginx"><code v-pre class="language-nginx">location ~* \.(ico|jpg|jpeg|png|gif|svg|svgz|webp|avif|avifs|js|css|eot|ttf|otf|woff|woff2)$ {
-    # Proxying to AWS S3 storage.
-    resolver 8.8.8.8;
-    set $bucket &quot;jrc-123-medias3bucket-456&quot;;
-    proxy_pass https://s3.amazonaws.com/$bucket$uri;
-    proxy_pass_request_body off;
-    proxy_pass_request_headers off;
-    proxy_intercept_errors on;
-}</code></pre>
+<p>Everything in the mount is owned by the cluster user and the <code translate="no" v-pre>jetrails</code> group.
+That means you can work with it as the cluster user without needing <code translate="no" v-pre>sudo</code>.</p>
+<p>Running <code translate="no" v-pre>mount</code> again while the bucket is already mounted is safe.
+It just tells you it&#x27;s already mounted and makes sure the link is in place.</p>
+<h2 id="unmount-the-bucket">Unmount The Bucket</h2>
+<p>When you&#x27;re done, unmount it.</p>
+<div id="unmount-the-bucket-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">sudo /opt/jrc/sbin/media-bucket unmount</code></pre>
 </doc-codeblock></div>
-<p>There&#x27;s no <code translate="no" v-pre>try_files</code> fallback in the new block, which is why the upload has to finish first.</p>
-<p>Confirm the regenerated config contains it.</p>
-<div id="serve-media-through-nginx-code-6" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">grep -A5 &quot;Proxying to AWS S3&quot; /etc/nginx/conf.d/example.com/magento.conf</code></pre>
+<p>This unmounts the bucket, removes the link from your site&#x27;s folder, and cleans up the empty mount folder.
+It&#x27;s safe to run even if the bucket isn&#x27;t mounted anymore, which is also how you clean up the leftover link after a reboot.</p>
+<p>The bucket disappears from <code translate="no" v-pre>/mnt</code> and your site&#x27;s folder right away, even if something is still using it.
+Anything that already had a file or folder open, like a copy that&#x27;s still running or a shell sitting in one of the bucket&#x27;s folders, keeps working until it&#x27;s done.
+The mount goes away for good once nothing is using it anymore.</p>
+<h2 id="why-its-temporary">Why It&#x27;s Temporary</h2>
+<p>The mount isn&#x27;t a real disk.
+Every directory listing, every file you look at, and every file you open turns into a request to S3.
+That makes things like <code translate="no" v-pre>du</code> or <code translate="no" v-pre>find</code> across your whole media folder slow on a large store.</p>
+<p>It also costs money.
+AWS bills S3 by the request, so a <code translate="no" v-pre>du</code> or a <code translate="no" v-pre>find</code> across the whole bucket can add up to thousands of billed requests in one go.
+Stick to the folders you actually need.</p>
+<p>That goes for the Code Editor too.
+Its search follows the link by default, so searching your whole workspace while the bucket is mounted reads through the entire bucket.
+Either unmount first, or add <code translate="no" v-pre>media-bucket</code> to the search&#x27;s &quot;files to exclude&quot; box.</p>
+<p>The mount only lives on the jump host.
+Your web nodes share <code translate="no" v-pre>/var/www</code> with the jump host, so they see the <code translate="no" v-pre>media-bucket</code> link too, but it&#x27;s broken on their end.
+Nothing on your site should ever be pointed at it.</p>
+<p>And it doesn&#x27;t come back after a reboot or after your jump host gets replaced.
+The link stays behind in your site&#x27;s folder, pointing at nothing, until you run <code translate="no" v-pre>unmount</code>.</p>
+<h2 id="what-you-can-do-with-it">What You Can Do With It</h2>
+<p>You can read files, copy new files in, replace existing files, and delete files.</p>
+<div id="what-you-can-do-with-it-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">cp ~/new-banner.jpg /var/www/example.com/media-bucket/media/wysiwyg/
+cp /var/www/example.com/media-bucket/media/catalog/product/a/b/example.jpg ~/
+rm /var/www/example.com/media-bucket/media/wysiwyg/old-banner.jpg</code></pre>
 </doc-codeblock></div>
-<p>If that comes back empty then the parameter didn&#x27;t apply, so re-check <code translate="no" v-pre>vhost info example.com</code> before going any further.</p>
-<p><code translate="no" v-pre>/etc/nginx</code> points at shared storage so every web node sees the regenerated config right away, but each one still needs a reload before it takes effect.</p>
-<div id="serve-media-through-nginx-code-7" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">cluster exec --role web -- sudo nginx -t
-cluster exec --role web -- sudo systemctl reload nginx</code></pre>
+<p>The link goes in your site&#x27;s folder on purpose.
+That&#x27;s the folder the Code Editor (VS Code in your browser) opens, so while the bucket is mounted you&#x27;ll see <code translate="no" v-pre>media-bucket</code> in its file explorer.
+You can browse the bucket from there, open files, drag new files in, and delete them, without touching a terminal.</p>
+<p>You can also reach it from your own computer over rsync or SFTP.
+Both have a couple of gotchas, so they get their own <doc-anchor-trigger to="#examples">examples</doc-anchor-trigger> below.</p>
+<p>Some things you&#x27;d normally do with files don&#x27;t work here.
+That&#x27;s because S3 doesn&#x27;t store files, it stores objects, and the mount only does what S3 can actually do.</p>
+<p>You can replace a file, but you can&#x27;t edit part of one or add to the end of it.
+S3 objects can&#x27;t be changed once they&#x27;re written, only replaced whole.
+Copying a new version over a file works, and so does saving a file you opened in the Code Editor, because both write out the whole file again.</p>
+<p>Renaming and moving files inside the bucket don&#x27;t work either.
+S3 has no rename.
+Renaming a file would really mean copying it to a new name and deleting the old one, and renaming a folder would mean doing that for every file inside it.
+The mount won&#x27;t fake that for you, so copy the file to its new path and delete the old one yourself.</p>
+<p>You also can&#x27;t change permissions or ownership on anything in the mount, and you can&#x27;t create symlinks inside it.
+S3 objects don&#x27;t have an owner, permissions, or a way to be a symlink.
+That&#x27;s why every file shows up with the same owner and permissions no matter what.</p>
+<p>Folders aren&#x27;t real in S3 either.
+A folder only exists because there are files in it, and it goes away on its own once the last one is deleted.
+So <code translate="no" v-pre>rm -r</code> on a folder may complain that it can&#x27;t remove some of the folders inside it.
+The files are still deleted, and the folders are already gone.</p>
+<h2 id="examples">Examples</h2>
+<p>These run from your own computer, not the jump host.
+Mount the bucket on the jump host first, and unmount it when you&#x27;re done.</p>
+<p>rsync needs a couple of extra flags to upload into the bucket.</p>
+<div id="examples-code-1" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">rsync -rv --inplace --ignore-existing ./banners/ \
+    jrc-abcd-1234@1.2.3.4:/var/www/example.com/media-bucket/media/wysiwyg/banners/</code></pre>
 </doc-codeblock></div>
-<p>Reload php-fpm too so it picks up the new configuration, and flush Magento&#x27;s cache.</p>
-<div id="serve-media-through-nginx-code-8" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">cluster exec --role web -- sudo systemctl reload php-fpm
-cd /var/www/example.com/live &amp;&amp; php bin/magento cache:flush</code></pre>
+<p><code translate="no" v-pre>--inplace</code> makes rsync write straight to the final file.
+Without it, rsync writes to a temporary file and renames it into place, and that rename fails.</p>
+<p><code translate="no" v-pre>--ignore-existing</code> makes rsync skip anything that&#x27;s already in the bucket.
+rsync can&#x27;t update a file that&#x27;s already there, so without this flag it tries to and fails on each one.
+Running the same command again only uploads files the bucket doesn&#x27;t have yet.</p>
+<p>Use <code translate="no" v-pre>-r</code> instead of <code translate="no" v-pre>-a</code> when uploading.
+<code translate="no" v-pre>-a</code> also tries to set modification times on the files, which the bucket refuses.
+The files still upload, but rsync reports <code translate="no" v-pre>failed to set times</code> for each one and exits with an error.</p>
+<p>If you need to replace a file that&#x27;s already in the bucket, upload it with SFTP instead, or copy it over on the jump host with <code translate="no" v-pre>cp</code>.</p>
+<p>Downloading works like any other rsync.</p>
+<div id="examples-code-2" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">rsync -av jrc-abcd-1234@1.2.3.4:/var/www/example.com/media-bucket/media/wysiwyg/banners/ ./banners/</code></pre>
 </doc-codeblock></div>
-<h2 id="test-it">Test It</h2>
-<p>Pick any file you can see in the bucket and note its size.</p>
-<div id="test-it-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">aws s3 ls s3://jrc-123-medias3bucket-456/media/catalog/product/a/b/</code></pre>
+<p>With SFTP, connect as the cluster user and change into the bucket.</p>
+<div id="examples-code-3" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-bash"><code v-pre class="language-bash">sftp jrc-abcd-1234@1.2.3.4</code></pre>
 </doc-codeblock></div>
-<p>Then request that same file through the site and compare.</p>
-<div id="test-it-code-2" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">curl -s -o /dev/null -w '%{http_code} %{content_type} %{size_download}\n' \
-    https://example.com/media/catalog/product/a/b/example.jpg</code></pre>
+<div id="examples-code-4" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">sftp&gt; cd /var/www/example.com/media-bucket/media/wysiwyg</code></pre>
 </doc-codeblock></div>
-<p>A 200, the right content type, and a size that matches the bucket means media is being served from S3.</p>
-<p>Now check that writing works.
-Upload an image in the Magento admin, either on a product or under Content &gt; Media Gallery, and confirm it shows up in the bucket.</p>
-<div id="test-it-code-3" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">aws s3 ls s3://jrc-123-medias3bucket-456/media/ --recursive | tail</code></pre>
+<p>Upload a file, download one, and delete one.</p>
+<div id="examples-code-5" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">sftp&gt; put new-banner.jpg
+sftp&gt; get old-banner.jpg
+sftp&gt; rm old-banner.jpg</code></pre>
 </doc-codeblock></div>
-<h2 id="things-to-know">Things To Know</h2>
-<p>Keep your local <code translate="no" v-pre>pub/media</code> folder in place until you&#x27;re confident the site is running correctly on S3.
-It&#x27;s your fallback, and it&#x27;s what lets you revert at any point.</p>
-<h2 id="reverting">Reverting</h2>
-<p>To go back to local media storage:</p>
-<div id="reverting-code-1" class="codeblock-wrapper"><doc-codeblock>
-<pre translate="no" class="language-bash"><code v-pre class="language-bash">cd /var/www/example.com/live
-php bin/magento setup:config:set --no-interaction --remote-storage-driver=file
-php bin/magento cache:flush
-vhost modify example.com s3_media_bucket_name=
-cluster exec --role web -- sudo nginx -t
-cluster exec --role web -- sudo systemctl reload nginx</code></pre>
+<p>Running <code translate="no" v-pre>put</code> again with a newer version of the same file replaces the one in the bucket.</p>
+<p>To upload a whole folder, use <code translate="no" v-pre>put -r</code>.</p>
+<div id="examples-code-6" class="codeblock-wrapper"><doc-codeblock>
+<pre translate="no" class="language-none"><code v-pre class="language-none">sftp&gt; put -r banners
+Entering banners/
+Entering banners/sale
+remote setstat &quot;/var/www/example.com/media-bucket/media/wysiwyg/banners/sale&quot;: Permission denied
+remote setstat &quot;/var/www/example.com/media-bucket/media/wysiwyg/banners&quot;: Permission denied</code></pre>
 </doc-codeblock></div>
+<p>The <code translate="no" v-pre>Permission denied</code> lines are SFTP trying to set permissions on each folder after it uploads them, which the bucket doesn&#x27;t support.
+You can ignore them.
+The files all made it up.</p>
+<p>You can also use a desktop SFTP client like FileZilla or WinSCP.
+Connect with the same user and IP address and open <code translate="no" v-pre>/var/www/example.com/media-bucket</code>.
+If your client uploads to a temporary file name and renames it once it&#x27;s done, turn that off, since renames don&#x27;t work here.
+WinSCP does this by default for larger files.
+You can turn it off under Preferences &gt; Transfer &gt; Endurance by setting &quot;Transfer to temporary filename&quot; to &quot;Disable&quot;.</p>
 
                 
                 <!-- Required only on API pages -->
@@ -346,7 +332,7 @@ cluster exec --role web -- sudo systemctl reload nginx</code></pre>
             </div>
             <footer id="retype-content-footer" class="clear-both">
                 <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-14">
-                    <a id="retype-edit-this-page" class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-body-link font-body-link hover:text-body-link-hover hover:underline" href="https://github.com/jetrails/autopilot-docs/blob/master/docs/guides/enable-s3-media-storage-for-magento/index.md" target="_blank" rel="noopener">
+                    <a id="retype-edit-this-page" class="my-2.5 inline-flex items-center text-sm whitespace-nowrap text-body-link font-body-link hover:text-body-link-hover hover:underline" href="https://github.com/jetrails/autopilot-docs/blob/master/docs/guides/temporarily-mount-the-media-s3-bucket/index.md" target="_blank" rel="noopener">
                         <svg class="mr-1.5" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M20 12c-.55 0-1 .45-1 1v7c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h7c.55 0 1-.45 1-1s-.45-1-1-1H4C2.35 3 1 4.35 1 6v14c0 1.65 1.35 3 3 3h14c1.65 0 3-1.35 3-3v-7c0-.55-.45-1-1-1z" /><path d="M22.21 1.79c-1.18-1.18-3.24-1.18-4.41 0l-9.5 9.5c-.13.13-.22.29-.26.46l-1 4c-.08.34.01.7.26.95.18.2.44.3.7.3.08 0 .16-.01.24-.03l4-1c.18-.04.34-.13.46-.26l9.5-9.5c1.22-1.22 1.22-3.2.01-4.42zm-1.42 3l-9.3 9.3-2.11.53.53-2.11 9.3-9.3c.42-.42 1.16-.42 1.59 0 .43.43.43 1.15-.01 1.58z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         <span>Edit this page</span>
                     </a>
@@ -354,20 +340,20 @@ cluster exec --role web -- sudo systemctl reload nginx</code></pre>
             
                 <nav id="retype-nextprev" class="print:hidden flex mt-14">
                     <div class="w-1/2">
-                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../guides/deploy-shopware-with-github-actions/">
+                        <a class="px-5 py-4 h-full flex items-center break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-l-lg transition-colors duration-150 relative hover:z-5" href="../../guides/serve-web-files-on-root-filesystem/">
                             <svg xmlns="http://www.w3.org/2000/svg" class="mr-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19 11H7.41l5.29-5.29a.996.996 0 10-1.41-1.41l-7 7a1 1 0 000 1.42l7 7a1.024 1.024 0 001.42-.01.996.996 0 000-1.41L7.41 13H19c.55 0 1-.45 1-1s-.45-1-1-1z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                             <span>
                                 <span class="block text-xs font-normal text-base-text-muted">Previous</span>
-                                <span class="block mt-1">Deploy Shopware With Git​Hub Actions</span>
+                                <span class="block mt-1">Serve Web Files on Root Filesystem</span>
                             </span>
                         </a>
                     </div>
             
                     <div class="w-1/2">
-                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../guides/onboard-magento-with-deployer/">
+                        <a class="px-5 py-4 -mx-px h-full flex items-center justify-end break-normal font-medium text-body-link border border-base-border hover:border-base-border-hover rounded-r-lg transition-colors duration-150 relative hover:z-5" href="../../patches/">
                             <span>
                                 <span class="block text-xs font-normal text-right text-base-text-muted">Next</span>
-                                <span class="block mt-1">Onboard Magento With Deployer</span>
+                                <span class="block mt-1">Patches</span>
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" overflow="visible"><path d="M19.92 12.38a1 1 0 00-.22-1.09l-7-7a.996.996 0 10-1.41 1.41l5.3 5.3H5c-.55 0-1 .45-1 1s.45 1 1 1h11.59l-5.29 5.29a.996.996 0 000 1.41c.19.2.44.3.7.3s.51-.1.71-.29l7-7c.09-.09.16-.21.21-.33z" /><path fill="none" d="M0 0h24v24H0z" /></svg>
                         </a>
@@ -411,6 +397,6 @@ cluster exec --role web -- sudo systemctl reload nginx</code></pre>
 
     <div id="retype-overlay-target"></div>
 
-        <script data-cfasync="false">window.__DOCS__ = { "title": "Enable S3 Media Storage For Magento", level: 2, icon: "file", hasPrism: true, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/guides/enable-s3-media-storage-for-magento/index.md" }</script>
+        <script data-cfasync="false">window.__DOCS__ = { "title": "Temporarily Mount The Media S3 Bucket", level: 2, icon: "file", hasPrism: true, hasInstagram: false, hasMermaid: false, hasMath: false, tocDepth: 23, "md": "/guides/temporarily-mount-the-media-s3-bucket/index.md" }</script>
 </body>
 </html>
