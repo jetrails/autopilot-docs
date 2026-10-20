@@ -39,3 +39,4 @@
 - [P015C](https://docs.autopilot.jetrails.com/patches/p015c.md): Magento NGINX Hardening (APSB26-73)
 - [P016C](https://docs.autopilot.jetrails.com/patches/p016c.md): Database Bin Logs
 - [P017R](https://docs.autopilot.jetrails.com/patches/p017r.md): Limit PHP Entrypoints
+- [P018C](https://docs.autopilot.jetrails.com/patches/p018c.md): Shopware NGINX Hardening (CVE-2026-104937)
