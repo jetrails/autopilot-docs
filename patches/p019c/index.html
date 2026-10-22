@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.845910839150">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.845945516746">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -37,11 +37,11 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.845910839150" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.845945516746" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.845910839150" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.845945516746" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.845910839150" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.845945516746" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -159,8 +159,10 @@ They affect every PHP version from 5.4 on, so Magento, Shopware, WordPress, and 
 Attacks were already being reported on the day the fix was released.
 Sansec has a <a href="https://sansec.io/research/php2shell">write-up</a> with more details.</p>
 <p>The PHP project fixed both in <a href="https://www.php.net/ChangeLog-8.php">PHP 8.2.35, 8.3.36, 8.4.27, and 8.5.12</a>, released on October 21, 2026.
+PHP 7.4 and 8.1 no longer get releases from the PHP project, but the PHP packages AutoPilot uses ship the same fix backported to them.
 This patch upgrades the PHP version your deployment uses to its fixed release.
-Your deployment stays on the same PHP version, only its patch level changes, for example from 8.3.35 to 8.3.36.</p>
+Your deployment stays on the same PHP version, only its patch level changes, for example from 8.3.35 to 8.3.36.
+On PHP 7.4 and 8.1 the version number stays the same and only the package build changes.</p>
 <p>Before the fix was out, we applied an emergency hotfix to AutoPilot deployments that turns off PHP&#x27;s session upload progress feature (<code translate="no" v-pre>session.upload_progress.enabled = Off</code>), following <a href="https://sansec.io/research/php2shell#temporary-mitigation">Sansec&#x27;s temporary mitigation</a>.
 That reduces exposure, but it doesn&#x27;t fully close the vulnerability, so upgrading PHP is still the only complete fix.
 The hotfix setting stays in place after this patch.</p>
@@ -177,8 +179,8 @@ The hotfix setting stays in place after this patch.</p>
         </div>
         <div class="pr-5 ml-3 w-full">
             <h5>Warning</h5>
-<p>PHP 8.1 and older no longer get fixes from the PHP project, so this patch can&#x27;t be applied to deployments running PHP 7.4 or 8.1.
-If your deployment runs one of those versions, please reach out to <a href="mailto:support@jetrails.com">support@jetrails.com</a> and we&#x27;ll work with you on moving to a supported version.</p>
+<p>PHP 7.4 and 8.1 are end of life, and the fix for them is a minimal backport made for this emergency.
+If your deployment runs one of those versions, we still recommend moving to a supported version, and <a href="mailto:support@jetrails.com">support@jetrails.com</a> can work with you on it.</p>
         </div>
     </div>
 </div>
