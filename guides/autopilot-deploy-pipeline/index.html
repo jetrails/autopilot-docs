@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="color-scheme" content="light dark">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.845945516746">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="4.6.0.846084118119">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 4.6.0">
@@ -37,12 +37,12 @@
 
     <script data-cfasync="false">(function(){var cl=document.documentElement.classList,ls=localStorage.getItem("retype_scheme"),hd=cl.contains("dark"),hl=cl.contains("light"),wm=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches;if(ls==="dark"||(!ls&&wm&&!hd&&!hl)){cl.remove("light");cl.add("dark")}else if(ls==="light"||(!ls&&!wm&&!hd&&!hl)){cl.remove("dark");cl.add("light")}})();</script>
 
-    <link href="../../resources/css/retype.css?v=4.6.0.845945516746" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=4.6.0.846084118119" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.845945516746" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=4.6.0.846084118119" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=4.6.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.845945516746" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.845945516746" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=4.6.0.846084118119" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../resources/js/prism.js?v=4.6.0.846084118119" defer></script>
 </head>
 <body>
     <div id="retype-app" class="relative text-base antialiased text-base-text bg-base-bg font-body">
@@ -161,32 +161,45 @@ We assume you already have a deployment provisioned on JetRails <a href="https:/
 <h2 id="connect-your-source-control-provider">Connect Your Source Control Provider</h2>
 <p>Right now GitHub is the only source control provider we support, but more are on the way.
 The integration lives at the organization level.
-Head to your organization&#x27;s <strong>Integrations</strong> page and open the <strong>GitHub</strong> integration, then click <strong>Install GitHub App</strong>.
-This kicks off the standard GitHub install flow where you pick the organization or user account to install on and choose which repositories to grant access to.</p>
-<p>Once the app is installed, the integration page shows the connected account along with a list of granted repositories and their default branches.
-Any deployment in this organization can now deploy from any of these granted repositories.</p>
-<h2 id="configure-the-repository-and-branch">Configure The Repository And Branch</h2>
-<p>Open the deployment you want to deploy to and go to the <strong>Deploy Pipeline</strong> tab, then the <strong>Deploy Settings</strong> section.
-Under <strong>Repository</strong>, pick the repository you want to deploy from and set the <strong>Deploy Branch</strong>.
+Head to your organization&#x27;s <strong>Integrations</strong> page and open the <strong>GitHub</strong> integration, then click <strong>Connect GitHub</strong>.
+GitHub asks you to authorize our app, which lets us see the accounts you already installed it on.</p>
+<p>If the app is already installed on one of your GitHub accounts, you get a list of them and can click <strong>Connect</strong> next to the one you want.
+To use an account that doesn&#x27;t have the app yet, click <strong>Install</strong> next to <strong>Another GitHub Account</strong>.
+If the app isn&#x27;t installed anywhere you have access to, we send you straight to GitHub&#x27;s install page.
+That&#x27;s the standard GitHub install flow where you pick the organization or user account to install on and choose which repositories to grant access to.
+Once you finish, you land back on the integration page already connected.</p>
+<p>The integration page shows the connected account along with a list of granted repositories and their default branches.
+Any deployment in this organization can now deploy from any of these granted repositories.
+One GitHub install can be connected to more than one AutoPilot organization, so organizations that deploy the same code can share it.</p>
+<h2 id="add-a-repository">Add A Repository</h2>
+<p>Open the deployment you want to deploy to and go to the <strong>Deploy Pipeline</strong> tab, then the <strong>Repositories</strong> section.
+Under <strong>Add Repository</strong>, pick the repository you want to deploy from, set the <strong>Deploy Branch</strong>, and click <strong>Add Repo</strong>.
 The branch defaults to the repository&#x27;s default branch, but you can point it at any branch you want (it doesn&#x27;t even have to exist yet).</p>
-<p>When you save the mapping, AutoPilot generates a dedicated deploy key, stores the private key on your jump host (where we run the deploy process), and registers the public key with your repository on your source control provider.
-This is the key we use to clone your repository during a deploy, so you do not have to manage any credentials yourself.</p>
-<h2 id="choose-a-deploy-strategy">Choose A Deploy Strategy</h2>
-<p>Still under <strong>Deploy Settings</strong>, the <strong>Deploy Strategy</strong> setting controls what happens when a commit lands on your deploy branch.
+<p>A deployment can deploy from more than one repository or branch, and each one gets its own row in the <strong>Repositories</strong> table.
+The same branch can also deploy to more than one deployment, so a single push can update all of them at once.
+Use the edit button on a row to point it at a different branch, or the delete button to remove it.</p>
+<p>You don&#x27;t have to manage any credentials yourself.
+Every deploy clones your repository with a short-lived, read-only token that only has access to that one repository.
+We create a new token for every run, never store it, and it expires on its own after an hour.</p>
+<h2 id="choose-a-trigger">Choose A Trigger</h2>
+<p>Each row in the <strong>Repositories</strong> table has a <strong>Trigger</strong> setting that controls what happens when a commit lands on that branch.
 You get two options.</p>
-<p><strong>Automatically Trigger On Push</strong> gives you a GitOps style workflow.
-Every push to your deploy branch kicks off a new deploy on its own, so merging a pull request is all it takes to ship.
-This is the one you want for most setups where the deploy branch is your source of truth for what should be live.</p>
-<p><strong>Manual Triggers Only</strong> ignores pushes entirely.
+<p><strong>Automatic</strong> gives you a GitOps style workflow.
+Every push to the branch kicks off a new deploy on its own, so merging a pull request is all it takes to ship.
+This is the one you want for most setups where the branch is your source of truth for what should be live.</p>
+<p><strong>Manual</strong> ignores pushes entirely.
 Commits still land on the branch, but nothing deploys until you say so.
 Reach for this when you want to control exactly when a deploy goes out, for example on a production deployment where you would rather ship on your own schedule than on every merge.
 You trigger these deploys yourself from the dashboard, which the next section covers.</p>
 <h2 id="trigger-manual-deploy">Trigger Manual Deploy</h2>
 <p>For a manual deploy, go to the <strong>Run History</strong> section and click <strong>Manually Trigger</strong>.
-A dialog shows you the exact commit that will be used, pulled from the tip of your deploy branch.
-Confirm it and the deploy starts, dropping you on the run details page where you can watch each step run in real time.</p>
-<p>For automatic deploys, just push to your deploy branch.
-As long as your strategy is set to trigger on push and the integration is not suspended, AutoPilot picks up the webhook and starts a deploy for that commit.</p>
+If the deployment has more than one repository or branch, pick the one you want under <strong>Repository &amp; Branch</strong>.
+The dialog shows you the exact commit that will be used, pulled from the tip of that branch.
+Click <strong>Deploy</strong> and the deploy starts, dropping you on the run details page where you can watch each step run in real time.
+If the branch doesn&#x27;t have any commits yet, there&#x27;s nothing to deploy and the <strong>Deploy</strong> button stays disabled.</p>
+<p>For automatic deploys, just push to the branch.
+As long as its trigger is set to <strong>Automatic</strong> and the integration is not suspended, AutoPilot picks up the webhook and starts a deploy for that commit.
+Every deployment with that branch set to <strong>Automatic</strong> gets its own deploy.</p>
 <p>Every run shows up in <strong>Run History</strong> with its trigger type, the pusher, the commit, and its status.
 Click into a run to see the individual pipeline steps, expand their logs, download them, or re-run the whole thing.</p>
 <h2 id="how-the-pipeline-works">How The Pipeline Works</h2>
@@ -280,11 +293,11 @@ The pipeline runs on the jump host itself, so <code translate="no" v-pre>autopil
 | `AUTOPILOT_DEPLOY_DEPLOYMENT_ID` | The ID of the deployment being deployed to |
 | `AUTOPILOT_DEPLOY_ENV_FILE` | Path to the file holding these environment variables (deleted after the run) |
 | `AUTOPILOT_DEPLOY_FORCED` | Whether the push was a force push, either `true` or `false` |
-| `AUTOPILOT_DEPLOY_KEY_FILE` | Path to the SSH deploy key used to clone the repository |
 | `AUTOPILOT_DEPLOY_LOG_PATH` | Path to the log file for this deploy run |
+| `AUTOPILOT_DEPLOY_PROVIDER` | The source control provider the deploy came from, for example `github` |
 | `AUTOPILOT_DEPLOY_PUSHER` | Who triggered the deploy, the GitHub user when triggered via a push or the AutoPilot user when triggered manually |
 | `AUTOPILOT_DEPLOY_REF` | The full git ref, for example `refs/heads/master` |
-| `AUTOPILOT_DEPLOY_REMOTE` | The git remote URL we clone from |
+| `AUTOPILOT_DEPLOY_REMOTE` | The git remote URL we clone from, for example `https://github.com/owner/repo.git` |
 | `AUTOPILOT_DEPLOY_REPO` | The repository full name, for example `owner/repo` |
 | `AUTOPILOT_DEPLOY_SHA` | The full commit SHA |
 | `AUTOPILOT_DEPLOY_SHA_SHORT` | The short commit SHA |
@@ -324,12 +337,12 @@ The pipeline runs on the jump host itself, so <code translate="no" v-pre>autopil
 <td>Whether the push was a force push, either <code translate="no" v-pre>true</code> or <code translate="no" v-pre>false</code></td>
 </tr>
 <tr>
-<td><code translate="no" v-pre>AUTOPILOT_DEPLOY_KEY_FILE</code></td>
-<td>Path to the SSH deploy key used to clone the repository</td>
-</tr>
-<tr>
 <td><code translate="no" v-pre>AUTOPILOT_DEPLOY_LOG_PATH</code></td>
 <td>Path to the log file for this deploy run</td>
+</tr>
+<tr>
+<td><code translate="no" v-pre>AUTOPILOT_DEPLOY_PROVIDER</code></td>
+<td>The source control provider the deploy came from, for example <code translate="no" v-pre>github</code></td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>AUTOPILOT_DEPLOY_PUSHER</code></td>
@@ -341,7 +354,7 @@ The pipeline runs on the jump host itself, so <code translate="no" v-pre>autopil
 </tr>
 <tr>
 <td><code translate="no" v-pre>AUTOPILOT_DEPLOY_REMOTE</code></td>
-<td>The git remote URL we clone from</td>
+<td>The git remote URL we clone from, for example <code translate="no" v-pre>https://github.com/owner/repo.git</code></td>
 </tr>
 <tr>
 <td><code translate="no" v-pre>AUTOPILOT_DEPLOY_REPO</code></td>
@@ -377,11 +390,15 @@ This is handy when a deploy is failing and the normal output does not tell you e
 You can put <code translate="no" v-pre>[DEBUG]</code> anywhere on the first line of the commit message.</p>
 <p>If a push or manual trigger does not start a deploy at all, check two things.
 The deployment has to be awake, since a hibernating deployment ignores pushes and blocks manual triggers until it is running again.
-The integration also has to be active, since a GitHub integration that has been suspended will not trigger deploys until you unsuspend it.</p>
+The integration also has to be active, since a GitHub integration that has been suspended will not trigger deploys until you unsuspend it.
+If manual triggers work but pushes don&#x27;t, make sure the branch&#x27;s trigger is set to <strong>Automatic</strong> on that deployment.</p>
 <h2 id="disconnect">Disconnect</h2>
-<p>If you want to stop deploying to a deployment, use the <strong>Disconnect</strong> button in <strong>Deploy Settings</strong>.
-This removes the deploy trigger, deletes the deploy key from your source control provider, and removes the private key file from the jump host.
-Your organization level integration stays intact, so your other deployments keep working.</p>
+<p>If you want to stop deploying a branch to a deployment, remove its row from the <strong>Repositories</strong> table.
+That only affects this deployment, so other deployments using the same branch keep deploying.</p>
+<p>To disconnect GitHub from the whole organization, click <strong>Disconnect</strong> on the organization&#x27;s GitHub integration page.
+This removes every repository from every deployment in the organization.
+The GitHub App stays installed on your GitHub account, so other AutoPilot organizations connected to the same install keep working.
+If you don&#x27;t need the app anymore, uninstall it from its installation settings on GitHub, which disconnects every AutoPilot organization using it.</p>
 
                 
                 <!-- Required only on API pages -->

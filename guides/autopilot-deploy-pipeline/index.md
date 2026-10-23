@@ -10,31 +10,43 @@ We assume you already have a deployment provisioned on JetRails [AutoPilot](http
 
 Right now GitHub is the only source control provider we support, but more are on the way.
 The integration lives at the organization level.
-Head to your organization's **Integrations** page and open the **GitHub** integration, then click **Install GitHub App**.
-This kicks off the standard GitHub install flow where you pick the organization or user account to install on and choose which repositories to grant access to.
+Head to your organization's **Integrations** page and open the **GitHub** integration, then click **Connect GitHub**.
+GitHub asks you to authorize our app, which lets us see the accounts you already installed it on.
 
-Once the app is installed, the integration page shows the connected account along with a list of granted repositories and their default branches.
+If the app is already installed on one of your GitHub accounts, you get a list of them and can click **Connect** next to the one you want.
+To use an account that doesn't have the app yet, click **Install** next to **Another GitHub Account**.
+If the app isn't installed anywhere you have access to, we send you straight to GitHub's install page.
+That's the standard GitHub install flow where you pick the organization or user account to install on and choose which repositories to grant access to.
+Once you finish, you land back on the integration page already connected.
+
+The integration page shows the connected account along with a list of granted repositories and their default branches.
 Any deployment in this organization can now deploy from any of these granted repositories.
+One GitHub install can be connected to more than one AutoPilot organization, so organizations that deploy the same code can share it.
 
-## Configure The Repository And Branch
+## Add A Repository
 
-Open the deployment you want to deploy to and go to the **Deploy Pipeline** tab, then the **Deploy Settings** section.
-Under **Repository**, pick the repository you want to deploy from and set the **Deploy Branch**.
+Open the deployment you want to deploy to and go to the **Deploy Pipeline** tab, then the **Repositories** section.
+Under **Add Repository**, pick the repository you want to deploy from, set the **Deploy Branch**, and click **Add Repo**.
 The branch defaults to the repository's default branch, but you can point it at any branch you want (it doesn't even have to exist yet).
 
-When you save the mapping, AutoPilot generates a dedicated deploy key, stores the private key on your jump host (where we run the deploy process), and registers the public key with your repository on your source control provider.
-This is the key we use to clone your repository during a deploy, so you do not have to manage any credentials yourself.
+A deployment can deploy from more than one repository or branch, and each one gets its own row in the **Repositories** table.
+The same branch can also deploy to more than one deployment, so a single push can update all of them at once.
+Use the edit button on a row to point it at a different branch, or the delete button to remove it.
 
-## Choose A Deploy Strategy
+You don't have to manage any credentials yourself.
+Every deploy clones your repository with a short-lived, read-only token that only has access to that one repository.
+We create a new token for every run, never store it, and it expires on its own after an hour.
 
-Still under **Deploy Settings**, the **Deploy Strategy** setting controls what happens when a commit lands on your deploy branch.
+## Choose A Trigger
+
+Each row in the **Repositories** table has a **Trigger** setting that controls what happens when a commit lands on that branch.
 You get two options.
 
-**Automatically Trigger On Push** gives you a GitOps style workflow.
-Every push to your deploy branch kicks off a new deploy on its own, so merging a pull request is all it takes to ship.
-This is the one you want for most setups where the deploy branch is your source of truth for what should be live.
+**Automatic** gives you a GitOps style workflow.
+Every push to the branch kicks off a new deploy on its own, so merging a pull request is all it takes to ship.
+This is the one you want for most setups where the branch is your source of truth for what should be live.
 
-**Manual Triggers Only** ignores pushes entirely.
+**Manual** ignores pushes entirely.
 Commits still land on the branch, but nothing deploys until you say so.
 Reach for this when you want to control exactly when a deploy goes out, for example on a production deployment where you would rather ship on your own schedule than on every merge.
 You trigger these deploys yourself from the dashboard, which the next section covers.
@@ -42,11 +54,14 @@ You trigger these deploys yourself from the dashboard, which the next section co
 ## Trigger Manual Deploy
 
 For a manual deploy, go to the **Run History** section and click **Manually Trigger**.
-A dialog shows you the exact commit that will be used, pulled from the tip of your deploy branch.
-Confirm it and the deploy starts, dropping you on the run details page where you can watch each step run in real time.
+If the deployment has more than one repository or branch, pick the one you want under **Repository & Branch**.
+The dialog shows you the exact commit that will be used, pulled from the tip of that branch.
+Click **Deploy** and the deploy starts, dropping you on the run details page where you can watch each step run in real time.
+If the branch doesn't have any commits yet, there's nothing to deploy and the **Deploy** button stays disabled.
 
-For automatic deploys, just push to your deploy branch.
-As long as your strategy is set to trigger on push and the integration is not suspended, AutoPilot picks up the webhook and starts a deploy for that commit.
+For automatic deploys, just push to the branch.
+As long as its trigger is set to **Automatic** and the integration is not suspended, AutoPilot picks up the webhook and starts a deploy for that commit.
+Every deployment with that branch set to **Automatic** gets its own deploy.
 
 Every run shows up in **Run History** with its trigger type, the pusher, the commit, and its status.
 Click into a run to see the individual pipeline steps, expand their logs, download them, or re-run the whole thing.
@@ -115,11 +130,11 @@ Each step runs with a set of environment variables describing the deploy, so you
 | `AUTOPILOT_DEPLOY_DEPLOYMENT_ID` | The ID of the deployment being deployed to |
 | `AUTOPILOT_DEPLOY_ENV_FILE` | Path to the file holding these environment variables (deleted after the run) |
 | `AUTOPILOT_DEPLOY_FORCED` | Whether the push was a force push, either `true` or `false` |
-| `AUTOPILOT_DEPLOY_KEY_FILE` | Path to the SSH deploy key used to clone the repository |
 | `AUTOPILOT_DEPLOY_LOG_PATH` | Path to the log file for this deploy run |
+| `AUTOPILOT_DEPLOY_PROVIDER` | The source control provider the deploy came from, for example `github` |
 | `AUTOPILOT_DEPLOY_PUSHER` | Who triggered the deploy, the GitHub user when triggered via a push or the AutoPilot user when triggered manually |
 | `AUTOPILOT_DEPLOY_REF` | The full git ref, for example `refs/heads/master` |
-| `AUTOPILOT_DEPLOY_REMOTE` | The git remote URL we clone from |
+| `AUTOPILOT_DEPLOY_REMOTE` | The git remote URL we clone from, for example `https://github.com/owner/repo.git` |
 | `AUTOPILOT_DEPLOY_REPO` | The repository full name, for example `owner/repo` |
 | `AUTOPILOT_DEPLOY_SHA` | The full commit SHA |
 | `AUTOPILOT_DEPLOY_SHA_SHORT` | The short commit SHA |
@@ -140,9 +155,14 @@ You can put `[DEBUG]` anywhere on the first line of the commit message.
 If a push or manual trigger does not start a deploy at all, check two things.
 The deployment has to be awake, since a hibernating deployment ignores pushes and blocks manual triggers until it is running again.
 The integration also has to be active, since a GitHub integration that has been suspended will not trigger deploys until you unsuspend it.
+If manual triggers work but pushes don't, make sure the branch's trigger is set to **Automatic** on that deployment.
 
 ## Disconnect
 
-If you want to stop deploying to a deployment, use the **Disconnect** button in **Deploy Settings**.
-This removes the deploy trigger, deletes the deploy key from your source control provider, and removes the private key file from the jump host.
-Your organization level integration stays intact, so your other deployments keep working.
+If you want to stop deploying a branch to a deployment, remove its row from the **Repositories** table.
+That only affects this deployment, so other deployments using the same branch keep deploying.
+
+To disconnect GitHub from the whole organization, click **Disconnect** on the organization's GitHub integration page.
+This removes every repository from every deployment in the organization.
+The GitHub App stays installed on your GitHub account, so other AutoPilot organizations connected to the same install keep working.
+If you don't need the app anymore, uninstall it from its installation settings on GitHub, which disconnects every AutoPilot organization using it.
