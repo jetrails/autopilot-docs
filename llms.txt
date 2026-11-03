@@ -3,7 +3,7 @@
 > Welcome to the AutoPilot documentation! This is your go-to resource for all things related to AutoPilot. Please note that our documentation is currently a work in progress.
 
 - [Welcome](https://docs.autopilot.jetrails.com/index.md): Welcome
-- [Patches](https://docs.autopilot.jetrails.com/patches/index.md): Patches are categorized as Critical, Recommended, or Optional, indicating their severity and the urgency of application. This classification is reflected in the last character of the patch's name.
+- [Patches](https://docs.autopilot.jetrails.com/patches/index.md): Patches are categorized as Critical, Maintenance, Recommended, or Optional, indicating their severity and the urgency of application. This classification is reflected in the last character of the patch's name.
 
 ## Guides
 
