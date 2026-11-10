@@ -4,7 +4,7 @@ This guide walks you through enabling it on an existing deployment.
 
 !!! Assumptions:
 Your site's primary domain name is `example.com` and you are logged in to the jump host as the cluster user.
-We also assume your media bucket is named `jrc-123-medias3bucket-456`.
+We also assume your media bucket is named `jrc-123-medias3bucket-456` and your deployment is in the `us-east-1` region.
 !!!
 
 ## Request The Bucket
