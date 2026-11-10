@@ -8,7 +8,7 @@ This guide walks you through enabling it on an existing deployment.
 
 !!! Assumptions:
 Your site's primary domain name is `example.com` and you are logged in to the jump host as the cluster user.
-We also assume your media bucket is named `jrc-123-medias3bucket-456`.
+We also assume your media bucket is named `jrc-123-medias3bucket-456` and your deployment is in the `us-east-1` region.
 !!!
 
 ## Request The Bucket
@@ -133,6 +133,8 @@ Once you are comfortable moving forward, set the bucket name:
 ```shell
 vhost modify example.com s3_media_bucket_name=jrc-123-medias3bucket-456
 ```
+
+If your deployment isn't in `us-east-1`, also pass its region, for example `s3_media_bucket_region=ca-central-1`.
 
 Here's what that actually changes.
 Inside `location /media/`, the block matching image and asset extensions currently serves files off local disk:
