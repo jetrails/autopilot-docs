@@ -130,6 +130,8 @@ Once you are comfortable moving forward, set the bucket name:
 vhost modify example.com s3_media_bucket_name=jrc-123-medias3bucket-456
 ```
 
+If your deployment isn't in `us-east-1`, also pass its region, for example `s3_media_bucket_region=ca-central-1`.
+
 Here's what that actually changes.
 Inside `location /media/`, the block matching image and asset extensions currently serves files off local disk:
 
