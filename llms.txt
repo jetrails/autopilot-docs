@@ -42,3 +42,4 @@
 - [P018C](https://docs.autopilot.jetrails.com/patches/p018c.md): Shopware NGINX Hardening (CVE-2026-104937)
 - [P019C](https://docs.autopilot.jetrails.com/patches/p019c.md): Php2Shell (CVE-2026-109618/CVE-2026-109619)
 - [P020C](https://docs.autopilot.jetrails.com/patches/p020c.md): Unattended Upgrade Enhancements
+- [P021C](https://docs.autopilot.jetrails.com/patches/p021c.md): Deploy Pipeline Update
